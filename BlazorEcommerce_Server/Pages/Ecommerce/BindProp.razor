@@ -1,0 +1,41 @@
+﻿@page "/Ecommerce/BindProp"
+@using EcommerceModel.Ecommerce;
+<h3>Product</h3>
+Name:@product.Name<br/>
+Active:@product.IsActive<br/>
+Price:@product.Price<br/>
+Property selected: @selectedProp<br/>
+@if(!String.IsNullOrWhiteSpace(selectedProp))
+{
+   <p>Property Value: @product.ProductProperties.FirstOrDefault(u=>u.Key==selectedProp).Value</p> 
+}
+Active:
+<input type="checkbox" @bind-value="@product.IsActive" checked="@(product.IsActive?"checked":null)" />
+<br/>
+<input type="number" @bind-value="@product.Price" @bind-value:event="oninput"/><br/>
+This Product is : @(product.IsActive?"Active":"InActive")<br/>
+<br/>
+Product Properties:
+<select @bind="selectedProp">
+    @foreach(var prop in product.ProductProperties)
+    {
+        <option value="@prop.Key">@prop.Key</option>
+    }
+</select>
+
+
+@code {
+    private string selectedProp = "";
+    Products product=new(){
+        Id=1,
+        Name="Rose Candle",
+        IsActive=true,
+        Price=10.99,
+            ProductProperties = new List<ProductProp>()
+        {
+            new ProductProp{Id=1, Key="color", Value="Black"},
+             new ProductProp{Id=1, Key="flavor", Value="Rose Jasmine"},
+              new ProductProp{Id=1, Key="size", Value="20oz"}
+        }
+    };
+}

@@ -1,47 +1,39 @@
 ﻿@page "/Ecommerce/DemoProduct"
 <h2 class="text-primary">DemoProduct</h2>
+<p>Favourites Total: @SelectedFavouriteCount</p>
+<p>Last Selected Product: @LastSelectedProductName</p>
 <div class="border p-2 mt-2" style="background-color:azure">
-    <div class="row">
-        @foreach(var prod in products)
+    <div class="row" >
+        @foreach (var prod in products)
         {
-            <div class="bg-light border p-2 col-5">
-                <h4 class="text-secondary"> Product- @prod.Id</h4>
-                Name- @prod.Name <br />
-                 Show Properties - <input type="checkbox" @bind-value="@prod.IsActive" checked="@(prod.IsActive?"checked":"null")" />
-                @if (prod.IsActive)
-                {
-                    @foreach(var prodProp in prod.ProductProperties)
-                    {
-                        <p>
-                            @prodProp.Key - @prodProp.Value
-                        </p>
-                    }
-                }
-                <br/>
-                <input type="button" class="btn btn-success" style="width:100px;" value="Edit" />
-                <input type="button" class="btn btn-danger" style="width:100px;" value="Delete" />
-            </div>
-            
+            <_ProductComponent prod="prod" OnFavouriteUpdated="FavouriteCountUpdate"
+                OnLastSelectedProductChange="LastSelectedProduct">
+            </_ProductComponent>
+
         }
     </div>
 </div>
 @code {
-    List<Products> products=new();
+
+
+    List<Products> products = new();
+    private int SelectedFavouriteCount { get; set; } = 0;
+    private string? LastSelectedProductName { get; set; } 
     protected override void OnInitialized()
     {
         products.Add(new()
             {
-                Id = 2,
-                Name = "MidnightBlossom",
+                Id = 1,
+                Name = "Midnight Blossom",
                 IsActive = false,
-                Price=23.43,
-            ProductProperties = new()
+                Price = 23.43,
+                ProductProperties = new()
             {
                     new ProductProp { Id = 1, Key = "Flavor", Value = "Rose"},
                     new ProductProp { Id = 2, Key = "Size", Value = "20oz"},
                     new ProductProp { Id = 3, Key = "Color", Value="Purple" }
             }
-    });
+            });
         products.Add(new()
             {
                 Id = 2,
@@ -54,6 +46,21 @@
                 new ProductProp { Id = 2, Key = "Size", Value = "18oz" },
                 new ProductProp {Id = 3,Key = "Color",Value = "White"}
             }
-        });
+            });
+    }
+    protected void FavouriteCountUpdate(bool isSelected)
+    {
+        if (isSelected)
+        {
+            SelectedFavouriteCount++;
+        }
+        else
+        {
+            SelectedFavouriteCount--;
+        }
+    }
+    protected void LastSelectedProduct(string productName)
+    {
+        LastSelectedProductName = productName;
     }
 }

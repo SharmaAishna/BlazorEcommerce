@@ -3,6 +3,9 @@
     <input type="checkbox" @onchange="FavouriteUpdated" /> Add to Favourite <br /><br />
     
     Name- @prod.Name <br />
+    <p>
+        RF from Parent- @FirstFragement @SecondFragement
+    </p>
     Show Properties - <input type="checkbox" @bind-value="@prod.IsActive" checked="@(prod.IsActive?"checked":null)" />
     @if (prod.IsActive)
     {
@@ -28,6 +31,10 @@
 
     [Parameter]
     public EventCallback<bool> OnFavouriteUpdated { get; set; }
+    [Parameter]
+    public RenderFragment FirstFragement { get; set; }
+    [Parameter]
+    public RenderFragment SecondFragement { get; set; }
 
     private async Task FavouriteUpdated(ChangeEventArgs e)
     {

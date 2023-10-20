@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BlazorEcommerce_DataAccessLayer\BlazorEcommerce_DataAccessLayer.csproj" />
     <ProjectReference Include="..\EcommerceModel\EcommerceModel.csproj" />
   </ItemGroup>
 

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -15,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BlazorEcommerce_Business\BlazorEcommerce_Business.csproj" />
     <ProjectReference Include="..\BlazorEcommerce_DataAccessLayer\BlazorEcommerce_DataAccessLayer.csproj" />
     <ProjectReference Include="..\EcommerceModel\EcommerceModel.csproj" />
   </ItemGroup>

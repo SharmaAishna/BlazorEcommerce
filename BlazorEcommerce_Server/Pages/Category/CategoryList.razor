@@ -1,12 +1,15 @@
 ﻿@page "/Ecommerce/category"
-@inject ICategoryRepository _categoryRepository
 
+@inject ICategoryRepository _categoryRepository
+@inject IJSRuntime _jsRuntime
+
+<_DeleteComponent></_DeleteComponent>
 <div class="row mt-4">
     <div class="col-6">
         <h4 class="card-title text-primary">Category List</h4>
     </div>
     <div class="col-4 offset-2">
-        <a href="/category/create" class="btn btn-primary form-control">Add New Category</a>
+        <a href="/category/create" class="btn btn-primary form-control py-2">Add New Category</a>
     </div>
     <div class="col-12">
         @if (categories.Any())
@@ -30,8 +33,8 @@
                                 @objCat.Name
                             </td>
                             <td>
-                                <NavLink href="" class="btn btn-primary">Edit</NavLink>
-                            </td>
+                                <NavLink href="@($"/Ecommerce/category/edit/{objCat.Id}")" class="btn btn-primary">Edit</NavLink>
+                            <button class="btn btn-danger m-2" @onclick="()=>HandleDelete(objCat.Id)">Delete</button></td>
                         </tr>
                     }
                 </tbody>
@@ -55,16 +58,28 @@
 </div>
 
 @code {
+
     private IEnumerable<CategoryDTO> categories { get; set; } = new List<CategoryDTO>();
+
     public bool IsLoading { get; set; } = true;
+
+    private int DeleteId { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
     {
         await Task.Run(LoadCategories);
     }
+
     private void LoadCategories()
     {
         categories = _categoryRepository.GetAll();
         IsLoading = false;
+    }
+
+    private void HandleDelete(int id)
+    {
+        DeleteId = id;
+        _jsRuntime.InvokeVoidAsync("ShowDeleteConfirmationModal");
+
     }
 }

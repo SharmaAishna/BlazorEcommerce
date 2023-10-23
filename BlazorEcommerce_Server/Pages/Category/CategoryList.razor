@@ -1,14 +1,70 @@
-﻿@page "/Category"
+﻿@page "/Ecommerce/category"
+@inject ICategoryRepository _categoryRepository
 
 <div class="row mt-4">
     <div class="col-6">
         <h4 class="card-title text-primary">Category List</h4>
     </div>
     <div class="col-4 offset-2">
-        <a href="/category/create" class="btn btn-primary form-control">Add New Categoary</a>
-    </div> 
+        <a href="/category/create" class="btn btn-primary form-control">Add New Category</a>
+    </div>
+    <div class="col-12">
+        @if (categories.Any())
+        {
+            <table class="table table-bordered table-striped ">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var objCat in categories)
+                    {
+                        <tr>
+                            <td>
+                                @objCat.Name
+                            </td>
+                            <td>
+                                <NavLink href="" class="btn btn-primary">Edit</NavLink>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            if(IsLoading)// loading GIF
+            {
+                <div class="text-center">
+                    <img src="/images/loading.gif" alt="Loading Image"/>
+                    </div>
+            }
+            else
+            {
+                //no records message
+                <p> No Records found. </p>
+            }
+        }
+    </div>
 </div>
 
 @code {
+    private IEnumerable<CategoryDTO> categories { get; set; } = new List<CategoryDTO>();
+    public bool IsLoading { get; set; } = true;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(LoadCategories);
+    }
+    private void LoadCategories()
+    {
+        categories = _categoryRepository.GetAll();
+        IsLoading = false;
+    }
 }

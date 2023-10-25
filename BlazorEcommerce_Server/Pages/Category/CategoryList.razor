@@ -3,14 +3,15 @@
 @inject ICategoryRepository _categoryRepository
 @inject IJSRuntime _jsRuntime
 
-<_DeleteComponent></_DeleteComponent>
+<_DeleteComponent IsParentComponentProcessing="IsLoading" ConfirmationChanged="ConfirmDelete_Click"></_DeleteComponent>
 <div class="row mt-4">
     <div class="col-6">
         <h4 class="card-title text-primary">Category List</h4>
     </div>
     <div class="col-4 offset-2">
-        <a href="/category/create" class="btn btn-primary form-control py-2">Add New Category</a>
+        <a href="/category/create" class="btn btn-primary form-control ">Add New Category</a>
     </div>
+    <br />
     <div class="col-12">
         @if (categories.Any())
         {
@@ -34,7 +35,8 @@
                             </td>
                             <td>
                                 <NavLink href="@($"/Ecommerce/category/edit/{objCat.Id}")" class="btn btn-primary">Edit</NavLink>
-                            <button class="btn btn-danger m-2" @onclick="()=>HandleDelete(objCat.Id)">Delete</button></td>
+                                <button class="btn btn-danger " @onclick="()=>HandleDelete(objCat.Id)">Delete</button>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -42,11 +44,11 @@
         }
         else
         {
-            if(IsLoading)// loading GIF
+            if (IsLoading)// loading GIF
             {
                 <div class="text-center">
-                    <img src="/images/loading.gif" alt="Loading Image"/>
-                    </div>
+                    <img src="/images/loading.gif" alt="Loading Image" />
+                </div>
             }
             else
             {
@@ -61,19 +63,26 @@
 
     private IEnumerable<CategoryDTO> categories { get; set; } = new List<CategoryDTO>();
 
-    public bool IsLoading { get; set; } = true;
+    public bool IsLoading { get; set; } 
 
     private int DeleteId { get; set; } = 0;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await Task.Run(LoadCategories);
+        if (firstRender)
+        {
+            LoadCategories(); ;
+        }
+
     }
 
     private void LoadCategories()
     {
+        IsLoading = true;
+        StateHasChanged();
         categories = _categoryRepository.GetAll();
         IsLoading = false;
+        StateHasChanged();
     }
 
     private void HandleDelete(int id)
@@ -81,5 +90,19 @@
         DeleteId = id;
         _jsRuntime.InvokeVoidAsync("ShowDeleteConfirmationModal");
 
+    }
+    public async Task ConfirmDelete_Click(bool isConfirmed)
+    {
+        IsLoading = true;
+
+        if (isConfirmed && DeleteId != 0)
+        {
+          //  await Task.Delay(5000);
+            //delete
+            _categoryRepository.Delete(DeleteId);
+            LoadCategories();
+            _jsRuntime.InvokeVoidAsync("HideDeleteConfirmationModal");
+        }
+        IsLoading = false;
     }
 }

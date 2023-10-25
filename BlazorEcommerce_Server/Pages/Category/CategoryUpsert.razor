@@ -57,34 +57,31 @@
             {
                 //update request
                 Title = "Update";
-                LoadCategory();
+              await LoadCategory();
 
             }
         }
 
     }
-    private void LoadCategory()
+    private async Task LoadCategory()
     {
         IsLoading = true;
         StateHasChanged();
-        category = _categoryRepository.GetById(Id);
+        category =await _categoryRepository.GetById(Id);
         IsLoading = false;
         StateHasChanged();
     }
 
-    private void UpsertCategory()
+    private async Task UpsertCategory()
     {
         if (category.Id == 0)
         {
             //create
-            _categoryRepository.Create(category);
-          
-
+           await _categoryRepository.Create(category);
         }
         else
         {
-            _categoryRepository.Update(category);
-           
+           await _categoryRepository.Update(category);  
         }
         _navigationManager.NavigateTo("/Ecommerce/category");
     }

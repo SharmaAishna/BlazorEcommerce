@@ -36,15 +36,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var objCat in products)
+                    @foreach (var prod in products)
                     {
                         <tr>
                             <td>
-                                @objCat.Name
+                                @prod.Name
                             </td>
                             <td>
-                                <NavLink href="@($"/Ecommerce/product/edit/{objCat.Id}")" class="btn btn-primary">Edit</NavLink>
-                                <button class="btn btn-danger " @onclick="()=>HandleDelete(objCat.Id)">Delete</button>
+                                <input type="checkbox" disabled checked="@prod.ShopFavorites">
+                            </td>
+                            <td>
+                                <input type="checkbox" disabled checked="@prod.CustomerFavorite">
+                            </td>
+                            @prod.Category.Name
+                            <td>
+                                <NavLink href="@($"/Ecommerce/product/edit/{prod.Id}")" class="btn btn-primary">Edit</NavLink>
+                                <button class="btn btn-danger " @onclick="()=>HandleDelete(prod.Id)">Delete</button>
                             </td>
                         </tr>
                     }

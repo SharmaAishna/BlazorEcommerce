@@ -1,4 +1,4 @@
-﻿@page "/Ecommerce/product"
+﻿@page "/Ecommerce/ProductList"
 
 @inject IProductRepository _productRepository
 @inject IJSRuntime _jsRuntime
@@ -22,6 +22,9 @@
                             Name
                         </th>
                         <th>
+                            Description
+                        </th>
+                        <th>
                             Shop Favorites
                         </th>
                         <th>
@@ -43,6 +46,9 @@
                                 @prod.Name
                             </td>
                             <td>
+                                @prod.Description
+                            </td>
+                            <td>
                                 <input type="checkbox" disabled checked="@prod.ShopFavorites">
                             </td>
                             <td>
@@ -50,7 +56,7 @@
                             </td>
                             @prod.Category.Name
                             <td>
-                                <NavLink href="@($"/Ecommerce/product/edit/{prod.Id}")" class="btn btn-primary">Edit</NavLink>
+                                <NavLink href="@($"/Ecommerce/product/edit/{prod.Id}")" class="btn btn-primary ">Edit</NavLink>
                                 <button class="btn btn-danger " @onclick="()=>HandleDelete(prod.Id)">Delete</button>
                             </td>
                         </tr>

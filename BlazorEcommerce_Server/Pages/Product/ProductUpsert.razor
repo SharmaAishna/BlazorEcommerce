@@ -9,7 +9,7 @@
 
 <div class="row my-2">
     <h3 class="card-title text-primary mb-3 ml-3">@Title Product</h3>
-    <div class="col-10">
+    <div class="col-md-10">
         @if (IsLoading)
         {
             <div class="text-center">
@@ -61,13 +61,13 @@
                         <ValidationMessage For="()=>product.CategoryId" />
                            
                     </div>
-                    <div class=" form-group col-6">
+                    <div class=" form-group pt-4 col-6">
                        <InputFile OnChange="HandleImageUpload"></InputFile>
                     </div>
                 </div>
                
                 <div class="form-group py-2">
-                    <button class="btn btn-primary">@Title</button>
+                    <button class="btn btn-primary" >@Title</button>
                     <NavLink href="/Ecommerce/ProductList" class="btn btn-secondary">Back to Index</NavLink>
                 </div>
 
@@ -76,16 +76,25 @@
         }
 
     </div>
+    <div class="col-md-2">
+        <img src="@product.ImageUrl" class="w-100" />
+    </div>
 </div>
 
 @code {
     [Parameter]
     public int Id { get; set; }
-    private ProductDTO product { get; set; } = new();
+    private ProductDTO product { get; set; } = new()
+    {
+        ImageUrl="/images/product/default.png"
+    };
     private IEnumerable<CategoryDTO> categories { get; set; } = new List<CategoryDTO>();
     private string Title { get; set; } = "Create";
 
+    private string ConfirmMessage = "Are you sure you want to click ?";
+  
     public bool IsLoading { get; set; }
+    public string OldImageUrl { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -95,6 +104,7 @@
         }
 
     }
+    
     private async Task LoadProduct()
     {
         IsLoading = true;
@@ -105,6 +115,7 @@
             //update
             Title = "update";
             product = await _productRepository.GetById(Id);
+            OldImageUrl = product.ImageUrl;
         }
         IsLoading = false;
         StateHasChanged();
@@ -116,10 +127,17 @@
         {
             //create
             await _productRepository.Create(product);
+            await _jsRuntime.ToastrSuccess("Product created successfully.");
         }
         else
         {
+            //update
+            if(OldImageUrl!=product.ImageUrl)
+            {
+                _fileUpload.DeleteFile(OldImageUrl);
+            }
             await _productRepository.Update(product);
+            await _jsRuntime.ToastrSuccess("Product updated successfully.");
         }
         _navigationManager.NavigateTo("/Ecommerce/ProductList");
     }
@@ -154,4 +172,7 @@
             await _jsRuntime.ToastrError(ex.Message);  
         }
     }
+
+    
+
 }

@@ -7,12 +7,16 @@ using BlazorEcommerce_Server.Service.IService;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.Blazor;
+
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mjc5NTA2N0AzMjMzMmUzMDJlMzBiZ0svZk1xZ0JhMUVlaDRpYWpmdTFlWnhyYjg1UGRWVW1BQzdOMmlFSmN3PQ==");
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddSyncfusionBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

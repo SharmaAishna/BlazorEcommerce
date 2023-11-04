@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <SfRichTextEditor @bind-Value="product.Description" ></SfRichTextEditor>
+                    <SfRichTextEditor @bind-Value="product.Description"></SfRichTextEditor>
                     <ValidationMessage For="()=>product.Description" />
                 </div>
                 <div class="row pt-3">
@@ -49,25 +49,25 @@
                             <label class="form-check-label">Is Customer Favorites</label>
                         </div>
                     </div>
-                     <div class=" form-group col-6">
+                    <div class=" form-group col-6">
                         <label> Category</label>
-                            <InputSelect @bind-Value="@product.CategoryId" class="form-select">
-                                <option value="0" disabled="disabled" selected>--Select Category--</option>
-                            @foreach(var cat in categories)
+                        <InputSelect @bind-Value="@product.CategoryId" class="form-select">
+                            <option value="0" disabled="disabled" selected>--Select Category--</option>
+                            @foreach (var cat in categories)
                             {
                                 <option value="@cat.Id">@cat.Name</option>
                             }
                         </InputSelect>
                         <ValidationMessage For="()=>product.CategoryId" />
-                           
+
                     </div>
                     <div class=" form-group pt-4 col-6">
-                       <InputFile OnChange="HandleImageUpload"></InputFile>
+                        <InputFile OnChange="HandleImageUpload"></InputFile>
                     </div>
                 </div>
-               
+
                 <div class="form-group py-2">
-                    <button class="btn btn-primary" >@Title</button>
+                    <button class="btn btn-primary">@Title</button>
                     <NavLink href="/Ecommerce/ProductList" class="btn btn-secondary">Back to Index</NavLink>
                 </div>
 
@@ -85,14 +85,14 @@
     [Parameter]
     public int Id { get; set; }
     private ProductDTO product { get; set; } = new()
-    {
-        ImageUrl="/images/product/default.png"
-    };
+        {
+            ImageUrl = "/images/product/default.png"
+        };
     private IEnumerable<CategoryDTO> categories { get; set; } = new List<CategoryDTO>();
     private string Title { get; set; } = "Create";
 
     private string ConfirmMessage = "Are you sure you want to click ?";
-  
+
     public bool IsLoading { get; set; }
     public string OldImageUrl { get; set; }
 
@@ -104,7 +104,7 @@
         }
 
     }
-    
+
     private async Task LoadProduct()
     {
         IsLoading = true;
@@ -132,7 +132,7 @@
         else
         {
             //update
-            if(OldImageUrl!=product.ImageUrl)
+            if (OldImageUrl != product.ImageUrl)
             {
                 _fileUpload.DeleteFile(OldImageUrl);
             }
@@ -144,16 +144,16 @@
 
     private async Task HandleImageUpload(InputFileChangeEventArgs e)
     {
-        IsLoading=true;
+        IsLoading = true;
         try
         {
             if (e.GetMultipleFiles().Count > 0)
             {
-                foreach(var file in e.GetMultipleFiles())
+                foreach (var file in e.GetMultipleFiles())
                 {
                     System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.Name);
-                    if(fileInfo.Extension.ToLower()==".jpg"||
-                    fileInfo.Extension.ToLower()==".png"||
+                    if (fileInfo.Extension.ToLower() == ".jpg" ||
+                    fileInfo.Extension.ToLower() == ".png" ||
                     fileInfo.Extension.ToLower() == ".jpeg")
                     {
                         product.ImageUrl = await _fileUpload.UploadFile(file);
@@ -163,16 +163,16 @@
                         await _jsRuntime.ToastrError("Please select .jpg/.jpeg/.png file only");
                         return;
                     }
-                }   
+                }
             }
             IsLoading = false;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            await _jsRuntime.ToastrError(ex.Message);  
+            await _jsRuntime.ToastrError(ex.Message);
         }
     }
 
-    
+
 
 }

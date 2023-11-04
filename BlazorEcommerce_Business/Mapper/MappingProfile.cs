@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace BlazorEcommerce_Business.Mapper
 {
-    public class MappingProfile:Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<ProductPrice, ProductPriceDTO>().ReverseMap();
         }
-        
+
     }
 }

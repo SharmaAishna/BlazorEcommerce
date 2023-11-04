@@ -10,7 +10,7 @@ namespace EcommerceModel
     public class CategoryDTO
     {
         public int Id { get; set; }
-        [Required(ErrorMessage ="Please Enter name..")]
+        [Required(ErrorMessage = "Please Enter name..")]
         public string Name { get; set; }
     }
 }

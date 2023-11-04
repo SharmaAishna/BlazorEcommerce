@@ -30,10 +30,10 @@
 
             </EditForm>
         }
-       
+
     </div>
 </div>
- 
+
 @code {
     [Parameter]
     public int Id { get; set; }
@@ -41,7 +41,7 @@
     private CategoryDTO category { get; set; } = new CategoryDTO();
     private string Title { get; set; } = "Create";
 
-    public bool IsLoading { get; set; } 
+    public bool IsLoading { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -57,7 +57,7 @@
             {
                 //update request
                 Title = "Update";
-              await LoadCategory();
+                await LoadCategory();
 
             }
         }
@@ -67,7 +67,7 @@
     {
         IsLoading = true;
         StateHasChanged();
-        category =await _categoryRepository.GetById(Id);
+        category = await _categoryRepository.GetById(Id);
         IsLoading = false;
         StateHasChanged();
     }
@@ -77,11 +77,11 @@
         if (category.Id == 0)
         {
             //create
-           await _categoryRepository.Create(category);
+            await _categoryRepository.Create(category);
         }
         else
         {
-           await _categoryRepository.Update(category);  
+            await _categoryRepository.Update(category);
         }
         _navigationManager.NavigateTo("/Ecommerce/category");
     }

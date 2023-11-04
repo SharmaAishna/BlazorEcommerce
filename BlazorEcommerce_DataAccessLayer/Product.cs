@@ -16,7 +16,7 @@ namespace BlazorEcommerce_DataAccessLayer
         public string Description { get; set; }
         public bool ShopFavorites { get; set; }
         public bool CustomerFavorite { get; set; }
-        public string Color {  get; set; }
+        public string Color { get; set; }
         public string ImageUrl { get; set; }
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]

@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorEcommerce_DataAccessL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor_Ecommercce_Common", "Blazor_Ecommercce_Common\Blazor_Ecommercce_Common.csproj", "{C59DABD8-A80E-46F2-A1A5-6A0FF41DD723}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor_Ecommerce_WebAPI", "Blazor_Ecommerce_WebAPI\Blazor_Ecommerce_WebAPI.csproj", "{DBF8B3B5-C970-4AFA-AAE4-9541E9B0732E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{C59DABD8-A80E-46F2-A1A5-6A0FF41DD723}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C59DABD8-A80E-46F2-A1A5-6A0FF41DD723}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C59DABD8-A80E-46F2-A1A5-6A0FF41DD723}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBF8B3B5-C970-4AFA-AAE4-9541E9B0732E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBF8B3B5-C970-4AFA-AAE4-9541E9B0732E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBF8B3B5-C970-4AFA-AAE4-9541E9B0732E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBF8B3B5-C970-4AFA-AAE4-9541E9B0732E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

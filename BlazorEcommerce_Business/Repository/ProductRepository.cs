@@ -18,13 +18,13 @@ namespace BlazorEcommerce_Business.Repository
         private readonly IMapper _mapper;
         public ProductRepository(ApplicationDbContext db, IMapper mapper)
         {
-                _db = db;
+            _db = db;
             _mapper = mapper;
         }
         public async Task<ProductDTO> Create(ProductDTO productDTO)
         {
             var obj = _mapper.Map<ProductDTO, Product>(productDTO);
-            var addedObj=_db.Products.Add(obj);
+            var addedObj = _db.Products.Add(obj);
             await _db.SaveChangesAsync();
             return _mapper.Map<Product, ProductDTO>(addedObj.Entity);
 
@@ -32,7 +32,7 @@ namespace BlazorEcommerce_Business.Repository
 
         public async Task<int> Delete(int id)
         {
-          var obj=await _db.Products.FirstOrDefaultAsync(u=>u.Id==id);
+            var obj = await _db.Products.FirstOrDefaultAsync(u => u.Id == id);
 
             if (obj != null)
             {
@@ -44,32 +44,32 @@ namespace BlazorEcommerce_Business.Repository
 
         public async Task<IEnumerable<ProductDTO>> GetAll()
         {
-           return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(_db.Products.Include(u=>u.Category));
+            return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(_db.Products.Include(u => u.Category).Include(u => u.ProductPrices));
         }
 
         public async Task<ProductDTO> GetById(int id)
         {
-           var obj = await _db.Products.Include(u =>u.Category).FirstOrDefaultAsync(p=>p.Id==id);
-            if(obj != null)
+            var obj = await _db.Products.Include(u => u.Category).Include(u => u.ProductPrices).FirstOrDefaultAsync(p => p.Id == id);
+            if (obj != null)
             {
-                return _mapper.Map<Product,ProductDTO>(obj);
+                return _mapper.Map<Product, ProductDTO>(obj);
             }
             return new ProductDTO();
         }
 
         public async Task<ProductDTO> Update(ProductDTO productDTO)
         {
-            var objFromDb=await _db.Products.FirstOrDefaultAsync(u=>u.Id== productDTO.Id);
+            var objFromDb = await _db.Products.FirstOrDefaultAsync(u => u.Id == productDTO.Id);
             {
                 if (objFromDb != null)
                 {
                     objFromDb.Name = productDTO.Name;
                     objFromDb.Description = productDTO.Description;
-                    objFromDb.ImageUrl= productDTO.ImageUrl;
+                    objFromDb.ImageUrl = productDTO.ImageUrl;
                     objFromDb.CategoryId = productDTO.CategoryId;
                     objFromDb.Color = productDTO.Color;
                     objFromDb.ShopFavorites = productDTO.ShopFavorites;
-                    objFromDb.CustomerFavorite= productDTO.CustomerFavorite;    
+                    objFromDb.CustomerFavorite = productDTO.CustomerFavorite;
                     _db.Products.Update(objFromDb);
                     await _db.SaveChangesAsync();
                     return _mapper.Map<Product, ProductDTO>(objFromDb);

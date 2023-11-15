@@ -44,7 +44,7 @@ namespace Blazor_Ecommerce_WebAPI.Controllers
                 });
 
             }
-            var product = _productRepository.GetById(ProductId.Value);
+            var product =await _productRepository.GetById(ProductId.Value);
             if (product == null)
             {
                 return BadRequest(new ErrorModelDTO()

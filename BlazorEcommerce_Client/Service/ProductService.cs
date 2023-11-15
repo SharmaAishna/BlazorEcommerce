@@ -8,13 +8,13 @@ namespace BlazorEcommerce_Client.Service
     {
         private readonly HttpClient _httpClient;
         private IConfiguration _configuration;
-        private string BaseServiceUrl;
+        private string BaseServerUrl;
 
         public ProductService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
-            BaseServerUrl = _configuration.GetSection("BaseServerUrl");
+            BaseServerUrl = _configuration.GetSection("BaseServerUrl").Value;
         }
         public async Task<IEnumerable<ProductDTO>> GetAll()
         {
@@ -23,6 +23,10 @@ namespace BlazorEcommerce_Client.Service
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var products = JsonConvert.DeserializeObject<IEnumerable<ProductDTO>>(content);
+                foreach(var prod in products)
+                {
+                    prod.ImageUrl=BaseServerUrl+prod.ImageUrl;
+                }
                 return products;
             }
             return new List<ProductDTO>();
@@ -35,6 +39,7 @@ namespace BlazorEcommerce_Client.Service
             if (response.IsSuccessStatusCode)
             {
                 var product = JsonConvert.DeserializeObject<ProductDTO>(content);
+                product.ImageUrl = BaseServerUrl + product.ImageUrl;
                 return product;
             }
             else

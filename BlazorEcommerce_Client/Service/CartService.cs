@@ -1,6 +1,6 @@
-﻿using Blazor_Ecommerce_Common;
-using BlazorEcommerce_Client.Service.IService;
+﻿using BlazorEcommerce_Client.Service.IService;
 using BlazorEcommerce_Client.Shared.ViewModels;
+using BlazorEcommerce_Common;
 using Blazored.LocalStorage;
 
 namespace BlazorEcommerce_Client.Service
@@ -12,10 +12,29 @@ namespace BlazorEcommerce_Client.Service
         {
             _localStorageService = localStorageService;
         }
-        public Task DecrementCart(ShoppingCart shoppingCart)
+        public async Task DecrementCart(ShoppingCart CartToDecrement)
         {
-            throw new NotImplementedException();
+            var cart = await _localStorageService.GetItemAsync<List<ShoppingCart>>(StaticDetails.ShoppingCart);
+
+            //if count is 0 or 1 then we remove the item.
+            for (int i = 0; i < cart.Count; i++)
+            {
+                if (cart[i].ProductId == CartToDecrement.ProductId && cart[i].ProductPriceId == CartToDecrement.ProductPriceId)
+                {
+                    if (cart[i].Count == 1 || cart[i].Count == 0)
+                    {
+                        cart.Remove(cart[i]);
+                    }
+                    else
+                    {
+                        cart[i].Count -= CartToDecrement.Count;
+                    }
+                }
+
+            }
+            await _localStorageService.SetItemAsync(StaticDetails.ShoppingCart, cart);
         }
+
 
         public async Task IncrementCart(ShoppingCart cartToAdd)
         {
@@ -41,8 +60,8 @@ namespace BlazorEcommerce_Client.Service
                     ProductPriceId = cartToAdd.ProductPriceId,
                     Count = cartToAdd.Count
                 });
-                await _localStorageService.SetItemAsync(StaticDetails.ShoppingCart, cart);
             }
+            await _localStorageService.SetItemAsync(StaticDetails.ShoppingCart, cart);
         }
     }
 }

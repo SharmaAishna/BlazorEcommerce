@@ -1,33 +1,33 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="wwwroot\Helper\IJSRuntimeExtension.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="wwwroot\Helper\IJSRuntimeExtension.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="wwwroot\Helper\IJSRuntimeExtension.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="wwwroot\Helper\IJSRuntimeExtension.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.20" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.20" PrivateAssets="all" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.20" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.20" PrivateAssets="all" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="wwwroot\images\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Blazor_Ecommercce_Common\Blazor_Ecommerce_Common.csproj" />
-    <ProjectReference Include="..\EcommerceModel\EcommerceModel.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BlazorEcommerce_Common\BlazorEcommerce_Common.csproj" />
+		<ProjectReference Include="..\EcommerceModel\EcommerceModel.csproj" />
+	</ItemGroup>
 
 </Project>

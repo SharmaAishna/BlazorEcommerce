@@ -1,6 +1,9 @@
 ﻿@page "/details/{ProductId:int}"
 @using BlazorEcommerce_Client.Shared.ViewModels;
+@inject NavigationManager _navigationManager
 @inject IProductService _productService
+@inject ICartService _cartService
+@inject IJSRuntime _jsRuntime
 
 @if (IsProcessing)
 {
@@ -11,7 +14,8 @@
 }
 else
 {
-    <EditForm OnValidSubmit="AddToCart" Model="detailViewModel" method="post">
+
+    <EditForm OnInvalidSubmit="AddToCart" Model="DetailsViewModel" method="post">
         <DataAnnotationsValidator />
         <div class="card container mt-4">
             <div class="card-header ml-0  row">
@@ -81,7 +85,7 @@ else
                         <div class="col-12 col-md-6 pb-1">
                             @if (detailViewModel.SelectedProductPriceID > 0)
                             {
-                                //item has been selected
+                            //item has been selected
                                 <button type="submit" value="Add to Cart" class="btn btn-primary form-control">Add to Cart</button>
 
                             }
@@ -90,7 +94,7 @@ else
                                 <button type="submit" disabled value="Add to Cart" class="btn btn-primary form-control">Add to Cart</button>
 
                             }
-                               </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -124,7 +128,17 @@ else
         detailViewModel.SelectedProductPriceID = productPriceId;
     }
 
-    private async Task AddToCart(){
+    private async Task AddToCart()
+    {
+        ShoppingCart shoppingCart = new()
+            {
+                Count = detailViewModel.Count,
+                ProductId = ProductId,
+                ProductPriceId = detailViewModel.SelectedProductPriceID
+            };
+        await _cartService.IncrementCart(shoppingCart);
+        _navigationManager.NavigateTo("/");
+        await _jsRuntime.ToastrSuccess("Product Added to Cart.");
 
     }
 }

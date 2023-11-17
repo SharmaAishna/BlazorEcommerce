@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorEcommerce_DataAccessL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor_Ecommerce_WebAPI", "Blazor_Ecommerce_WebAPI\Blazor_Ecommerce_WebAPI.csproj", "{DBF8B3B5-C970-4AFA-AAE4-9541E9B0732E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorEcommerce_Common", "BlazorEcommerce_Common\BlazorEcommerce_Common.csproj", "{D94394EA-33EC-4EBF-B284-C61FD1CAFD85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorEcommerce_Common", "BlazorEcommerce_Common\BlazorEcommerce_Common.csproj", "{D94394EA-33EC-4EBF-B284-C61FD1CAFD85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

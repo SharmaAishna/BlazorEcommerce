@@ -15,7 +15,7 @@
 else
 {
 
-    <EditForm OnInvalidSubmit="AddToCart" Model="DetailsViewModel" method="post">
+    <EditForm OnValidSubmit="AddToCart" Model="detailViewModel" method="post">
         <DataAnnotationsValidator />
         <div class="card container mt-4">
             <div class="card-header ml-0  row">
@@ -91,7 +91,7 @@ else
                             }
                             else
                             {
-                                <button type="submit" disabled value="Add to Cart" class="btn btn-primary form-control">Add to Cart</button>
+                                <button type="submit" value="Add to Cart" disabled class="btn btn-primary form-control">Add to Cart</button>
 
                             }
                         </div>
@@ -111,7 +111,7 @@ else
     public ProductDTO Product { get; set; } = new();
     public bool IsProcessing { get; set; } = false;
 
-    public DetailsViewModel detailViewModel { get; set; }
+    public DetailsViewModel detailViewModel = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -138,7 +138,7 @@ else
             };
         await _cartService.IncrementCart(shoppingCart);
         _navigationManager.NavigateTo("/");
-        await _jsRuntime.ToastrSuccess("Product Added to Cart.");
+        await _jsRuntime.ToastrSuccess("Product Added to Cart successfully.");
 
     }
 }

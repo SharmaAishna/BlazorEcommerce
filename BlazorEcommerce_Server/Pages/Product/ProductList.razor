@@ -1,4 +1,4 @@
-﻿@page "/Ecommerce/ProductList"
+﻿@page "/ProductList"
 
 @inject IProductRepository _productRepository
 @inject IJSRuntime _jsRuntime
@@ -57,8 +57,8 @@
                             </td>
                             @prod.Category.Name
                             <td>
-                                <NavLink href="@($"/Ecommerce/product/edit/{prod.Id}")" class="btn btn-primary ">Edit</NavLink>
-                                <NavLink href="@($"/Ecommerce/ProductPrice/{prod.Id}")" class="btn btn-success ">Price</NavLink>
+                                <NavLink href="@($"/product/edit/{prod.Id}")" class="btn btn-primary ">Edit</NavLink>
+                                <NavLink href="@($"/ProductPrice/{prod.Id}")" class="btn btn-success ">Price</NavLink>
                                 <button class="btn btn-danger " @onclick="()=>HandleDelete(prod.Id)">Delete</button>
                             </td>
                         </tr>

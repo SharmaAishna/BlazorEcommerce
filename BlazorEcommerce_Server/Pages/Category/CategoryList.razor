@@ -1,4 +1,4 @@
-﻿@page "/Ecommerce/category"
+﻿@page "/category"
 
 @inject ICategoryRepository _categoryRepository
 @inject IJSRuntime _jsRuntime
@@ -34,7 +34,7 @@
                                 @objCat.Name
                             </td>
                             <td>
-                                <NavLink href="@($"/Ecommerce/category/edit/{objCat.Id}")" class="btn btn-primary">Edit</NavLink>
+                                <NavLink href="@($"/category/edit/{objCat.Id}")" class="btn btn-primary">Edit</NavLink>
                                 <button class="btn btn-danger " @onclick="()=>HandleDelete(objCat.Id)">Delete</button>
                             </td>
                         </tr>

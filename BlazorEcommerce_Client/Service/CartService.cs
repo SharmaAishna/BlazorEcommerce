@@ -8,6 +8,7 @@ namespace BlazorEcommerce_Client.Service
     public class CartService : ICartService
     {
         private readonly ILocalStorageService _localStorageService;
+        public event Action OnChange;
         public CartService(ILocalStorageService localStorageService)
         {
             _localStorageService = localStorageService;
@@ -21,7 +22,7 @@ namespace BlazorEcommerce_Client.Service
             {
                 if (cart[i].ProductId == CartToDecrement.ProductId && cart[i].ProductPriceId == CartToDecrement.ProductPriceId)
                 {
-                    if (cart[i].Count == 1 || cart[i].Count == 0)
+                    if (cart[i].Count == 1 || CartToDecrement.Count == 0)
                     {
                         cart.Remove(cart[i]);
                     }
@@ -33,6 +34,7 @@ namespace BlazorEcommerce_Client.Service
 
             }
             await _localStorageService.SetItemAsync(StaticDetails.ShoppingCart, cart);
+            OnChange.Invoke();
         }
 
 
@@ -62,6 +64,7 @@ namespace BlazorEcommerce_Client.Service
                 });
             }
             await _localStorageService.SetItemAsync(StaticDetails.ShoppingCart, cart);
+            OnChange.Invoke();
         }
     }
 }

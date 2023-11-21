@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BlazorEcommerce_DataAccessLayer;
+using BlazorEcommerce_DataAccessLayer.ViewModel;
 using EcommerceModel;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ namespace BlazorEcommerce_Business.Mapper
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Product, ProductDTO>().ReverseMap();
             CreateMap<ProductPrice, ProductPriceDTO>().ReverseMap();
+            CreateMap<OrderHeader, OrderHeaderDTO>().ReverseMap();
+            CreateMap<OrderDetail, OrderDetailDTO>().ReverseMap();
+            CreateMap<OrderDTO, Order>().ReverseMap();
         }
 
     }

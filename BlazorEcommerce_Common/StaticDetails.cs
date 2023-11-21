@@ -10,6 +10,10 @@ namespace BlazorEcommerce_Common
     {
 
         public const string ShoppingCart = "ShoppingCart";
+        public const string Status_Pending = "Pending";
+        public const string Status_Confirmed = "Confirmed";
+        public const string Status_Refunded = "Refunded";
+        public const string Status_Cancelled = "Cancelled";
 
     }
 }

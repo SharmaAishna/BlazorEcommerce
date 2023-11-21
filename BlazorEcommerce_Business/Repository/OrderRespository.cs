@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BlazorEcommerce_Business.Repository.IRepository;
+using BlazorEcommerce_Common;
 using BlazorEcommerce_DataAccessLayer;
 using BlazorEcommerce_DataAccessLayer.Data;
 using BlazorEcommerce_DataAccessLayer.ViewModel;
@@ -81,7 +82,7 @@ namespace BlazorEcommerce_Business.Repository
                 };
                 OrderFromDb.Add(order);
             }
-            
+
             //do some Filtering #TODO
             return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDTO>>(OrderFromDb);
         }
@@ -103,17 +104,48 @@ namespace BlazorEcommerce_Business.Repository
 
         public async Task<OrderHeaderDTO> MarkPaymentSuccessful(int id)
         {
-            throw new NotImplementedException();
+            var data = await _db.OrderHeaders.FindAsync(id);
+            if (data == null)
+            {
+                return new OrderHeaderDTO();
+            }
+            if (data.Status == StaticDetails.Status_Pending)
+            {
+                data.Status = StaticDetails.Status_Confirmed;
+                await _db.SaveChangesAsync();
+                return _mapper.Map<OrderHeader, OrderHeaderDTO>(data);
+            }
+            return new OrderHeaderDTO();
         }
 
         public async Task<OrderHeaderDTO> UpdateHeader(OrderHeaderDTO orderHeaderDTO)
         {
-            throw new NotImplementedException();
+            if (orderHeaderDTO != null)
+            {
+                var OrderHeader = _mapper.Map<OrderHeaderDTO, OrderHeader>(orderHeaderDTO);
+                _db.OrderHeaders.Update(OrderHeader);
+                await _db.SaveChangesAsync();
+                return _mapper.Map<OrderHeader, OrderHeaderDTO>(OrderHeader);
+            }
+            return new OrderHeaderDTO();
         }
 
         public async Task<bool> UpdateOrderStatus(int orderId, string status)
         {
-            throw new NotImplementedException();
+            var data = await _db.OrderHeaders.FindAsync(orderId);
+            if (data == null)
+            {
+                return false;
+            }
+            data.Status == status;
+            if (status == StaticDetails.Status_Shipped)
+            {
+                data.ShippingDate = DateTime.Now;
+            }
+
+            await _db.SaveChangesAsync();
+            return true;
+
         }
     }
 }

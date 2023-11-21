@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BlazorEcommerce_Common\BlazorEcommerce_Common.csproj" />
     <ProjectReference Include="..\BlazorEcommerce_DataAccessLayer\BlazorEcommerce_DataAccessLayer.csproj" />
     <ProjectReference Include="..\EcommerceModel\EcommerceModel.csproj" />
   </ItemGroup>

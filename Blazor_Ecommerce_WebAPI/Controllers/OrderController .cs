@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blazor_Ecommerce_WebAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class ProductController : ControllerBase
     {
-        private readonly IOrderRepository _orderRepository;
-        public OrderController(IOrderRepository orderRepository)
+        private readonly IProductRepository _productRepository;
+        public ProductController(IProductRepository productRepository)
         {
-            _orderRepository = orderRepository;
+            _productRepository = productRepository;
         }
 
         /// <summary>
@@ -23,19 +23,19 @@ namespace Blazor_Ecommerce_WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _orderRepository.GetAll());
+            return Ok(await _productRepository.GetAll());
         }
 
         /// <summary>
         /// Get By Id
         /// </summary>
-        /// <param name="orderHeaderId"></param>
+        /// <param name="ProductId"></param>
         /// <returns></returns>
 
-        [HttpGet("{orderHeaderId}")]
-        public async Task<IActionResult> GetById(int? orderHeaderId)
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetById(int? ProductId)
         {
-            if (orderHeaderId == null || orderHeaderId == 0)
+            if (ProductId == null || ProductId == 0)
             {
                 return BadRequest(new ErrorModelDTO()
                 {
@@ -44,8 +44,8 @@ namespace Blazor_Ecommerce_WebAPI.Controllers
                 });
 
             }
-            var orderHeader =await _orderRepository.GetById(orderHeaderId.Value);
-            if (orderHeader == null)
+            var product =await _productRepository.GetById(ProductId.Value);
+            if (product == null)
             {
                 return BadRequest(new ErrorModelDTO()
                 {
@@ -53,7 +53,7 @@ namespace Blazor_Ecommerce_WebAPI.Controllers
                     StatusCode = StatusCodes.Status404NotFound
                 });
             }
-            return Ok(orderHeader);
+            return Ok(product);
         }
     }
 }

@@ -63,7 +63,6 @@ namespace BlazorEcommerce_Business.Repository
                 _db.OrderDetails.RemoveRange(objDetail);
                 _db.OrderHeaders.Remove(objHeader);
                 return _db.SaveChanges();
-
             }
             return 0;
         }
@@ -78,7 +77,7 @@ namespace BlazorEcommerce_Business.Repository
                 Order order = new()
                 {
                     OrderHeader = header,
-                    OrderDetails = orderDetailList.Where(u => u.OrderHeaderId == header.Id),
+                    OrderDetails = orderDetailList.Where(u => u.OrderHeaderId == header.Id).ToList(),
                 };
                 OrderFromDb.Add(order);
             }
@@ -92,7 +91,7 @@ namespace BlazorEcommerce_Business.Repository
             Order order = new()
             {
                 OrderHeader = _db.OrderHeaders.FirstOrDefault(u => u.Id == id),
-                OrderDetails = _db.OrderDetails.Where(u => u.OrderHeaderId == id)
+                OrderDetails = _db.OrderDetails.Where(u => u.OrderHeaderId == id).ToList(),
             };
             if (order != null)
             {
@@ -137,7 +136,7 @@ namespace BlazorEcommerce_Business.Repository
             {
                 return false;
             }
-            data.Status == status;
+            data.Status = status;
             if (status == StaticDetails.Status_Shipped)
             {
                 data.ShippingDate = DateTime.Now;

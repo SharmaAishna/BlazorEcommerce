@@ -9,6 +9,7 @@ namespace BlazorEcommerce_Client.Service
     {
         private readonly ILocalStorageService _localStorageService;
         public event Action OnChange;
+
         public CartService(ILocalStorageService localStorageService)
         {
             _localStorageService = localStorageService;

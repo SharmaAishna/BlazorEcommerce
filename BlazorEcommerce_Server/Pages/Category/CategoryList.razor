@@ -1,7 +1,9 @@
 ﻿@page "/category"
+@using BlazorEcommerce_Common;
 
 @inject ICategoryRepository _categoryRepository
 @inject IJSRuntime _jsRuntime
+@attribute [Authorize(Roles = StaticDetails.Role_Admin)]
 
 <_DeleteComponent IsParentComponentProcessing="IsLoading" ConfirmationChanged="ConfirmDelete_Click"></_DeleteComponent>
 <div class="row mt-4">

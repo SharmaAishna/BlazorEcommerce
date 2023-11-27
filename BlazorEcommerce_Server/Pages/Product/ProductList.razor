@@ -1,8 +1,9 @@
 ﻿@page "/ProductList"
-
+@using BlazorEcommerce_Common;
 @inject IProductRepository _productRepository
 @inject IJSRuntime _jsRuntime
 @inject IFileUpload _fileUpload
+@inject NavigationManager _navigationManager
 
 <_DeleteComponent IsParentComponentProcessing="IsLoading" ConfirmationChanged="ConfirmDelete_Click"></_DeleteComponent>
 <div class="row mt-4">
@@ -91,6 +92,25 @@
 
     private int DeleteId { get; set; } = 0;
 
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationState;
+        if (!authState.User.Identity.IsAuthenticated)
+        {
+            var uri = new Uri(_navigationManager.Uri);
+            _navigationManager.NavigateTo($"/identity/account/login?returnUrl={uri.LocalPath}", forceLoad: true);
+        }
+        else
+        {
+            if (!authState.User.IsInRole(StaticDetails.Role_Admin))
+            {
+                _navigationManager.NavigateTo("/Error Page");
+            }
+        }
+    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

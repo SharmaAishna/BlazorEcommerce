@@ -107,11 +107,7 @@ namespace BlazorEcommerce_Server.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            if (!await _roleManager.RoleExistsAsync(StaticDetails.Role_Admin))
-            {
-                _roleManager.CreateAsync(new IdentityRole(StaticDetails.Role_Admin)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(StaticDetails.Role_Customer)).GetAwaiter().GetResult();
-            }
+           
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -130,7 +126,7 @@ namespace BlazorEcommerce_Server.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     //For Security One admin role is created:assigning Admin Role. After customer added different roles can be assign. 
-                  //  await _userManager.AddToRoleAsync(user, StaticDetails.Role_Admin);
+                   await _userManager.AddToRoleAsync(user, StaticDetails.Role_Customer);
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

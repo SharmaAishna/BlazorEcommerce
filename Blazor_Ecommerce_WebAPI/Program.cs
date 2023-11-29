@@ -4,6 +4,7 @@ using BlazorEcommerce_DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using BlazorEcommerce_DataAccessLayer;
+using Blazor_Ecommerce_WebAPI.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+var apiSettingsSection = builder.Configuration.GetSection("APISettings");
+builder.Services.Configure<APISettings>(apiSettingsSection);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductRepository, ProductRepository>();

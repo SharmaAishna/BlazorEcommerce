@@ -1,5 +1,7 @@
 ﻿using BlazorEcommerce_Business.Repository.IRepository;
+using BlazorEcommerce_Common;
 using EcommerceModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +23,7 @@ namespace Blazor_Ecommerce_WebAPI.Controllers
         /// <returns></returns>
 
         [HttpGet]
+       
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _orderRepository.GetAll());

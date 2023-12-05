@@ -1,6 +1,15 @@
 ﻿@page "/"
 @inject IProductService _productService
 
+<AuthorizeView>
+    <Authorized>
+        <p>Welcome, @context.User.Identity.Name</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>Not Signed in!</p>
+    </NotAuthorized>
+
+</AuthorizeView>
 
 @if (IsProcessing)
 {
@@ -12,7 +21,7 @@ else
 {
     <div class="container">
         <div class="row pb-3 pt-3 backgroundWhite">
-             @foreach (var category in Products.Select(u => u.Category.Name).Distinct())
+            @foreach (var category in Products.Select(u => u.Category.Name).Distinct())
             {
                 <h2 class="text-success pl-1"><b>@category</b></h2>
                 @foreach (var product in Products.Where(u => u.Category.Name == category))
@@ -41,7 +50,7 @@ else
                             </div>
                         </div>
                     </div>
-                } 
+                }
 
             }
         </div>

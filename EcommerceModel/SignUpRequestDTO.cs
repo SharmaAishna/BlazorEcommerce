@@ -24,6 +24,7 @@ namespace EcommerceModel
         [DataType(DataType.Password)]
         [Compare("Password",ErrorMessage ="Password and confirm password is not matched")]
         public string ConfirmPassword { get; set; }
+        public bool IsRegisterationSuccessful { get; set; }
 
     }
 }

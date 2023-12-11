@@ -48,20 +48,20 @@ namespace BlazorEcommerce_Client.Service
             await _localStorageService.RemoveItemAsync(StaticDetails.Local_UserDetails);
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
-        public async Task<SignUpRequestDTO> RegisterUser(SignUpRequestDTO signUpRequestDTO)
+        public async Task<SignUpResponseDTO> RegisterUser(SignUpRequestDTO signUpRequestDTO)
         {
             var content = JsonConvert.SerializeObject(signUpRequestDTO);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync("api/account/signup", bodyContent);
             var contentTemp = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<SignUpRequestDTO>(contentTemp);
+            var result = JsonConvert.DeserializeObject<SignUpResponseDTO>(contentTemp);
             if (response.IsSuccessStatusCode)
             {
-                return new SignUpRequestDTO {IsRegisterationSuccessful = true };
+                return new SignUpResponseDTO { IsRegisterationSuccessful = true };
             }
             else
             {
-                return new SignUpRequestDTO { IsRegisterationSuccessful =false };
+                return new SignUpResponseDTO { IsRegisterationSuccessful =false , Errors=result.Errors};
             }
         }
     }

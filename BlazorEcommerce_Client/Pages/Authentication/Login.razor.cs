@@ -1,6 +1,8 @@
 ﻿using BlazorEcommerce_Client.Service.IService;
 using EcommerceModel;
 using Microsoft.AspNetCore.Components;
+using System.ComponentModel.Design;
+using System.Web;
 
 namespace BlazorEcommerce_Client.Pages.Authentication
 {
@@ -10,6 +12,7 @@ namespace BlazorEcommerce_Client.Pages.Authentication
         public bool IsProcessing { get; set; } = false;
         public bool ShowSignInErrors { get; set; }
         public string Errors { get; set; }
+        public string ReturnUrl { get; set; }
 
         [Inject]
         public IAuthenticationService _authService { get; set; }
@@ -25,9 +28,20 @@ namespace BlazorEcommerce_Client.Pages.Authentication
             if (result.IsAuthSuccessful)
             {
                 //Registeration is successful
-                _navigationManager.NavigateTo("/");
+                var absoluteUri = new Uri(_navigationManager.Uri);
+                var queryParam=HttpUtility.ParseQueryString(absoluteUri.Query);
+                ReturnUrl = queryParam["returnUrl"];
+                if(string.IsNullOrEmpty(ReturnUrl))
+                {
+                    _navigationManager.NavigateTo("/");
+                }
+                else
+                {
+                    _navigationManager.NavigateTo("/" + ReturnUrl);
+                }
 
             }
+            
             else
             {
                 //failure

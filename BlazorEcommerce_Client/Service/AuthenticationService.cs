@@ -33,6 +33,7 @@ namespace BlazorEcommerce_Client.Service
             {
                 await _localStorageService.SetItemAsync(StaticDetails.Local_Token, result.Token);
                 await _localStorageService.SetItemAsync(StaticDetails.Local_UserDetails, result.UserDTO);
+                ((AuthStateProvider)_authenticationStateProvider).NotifyUserLoggedIn(result.Token);
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);
                 return new SignInResponseDTO() { IsAuthSuccessful = true };
             }
@@ -46,6 +47,7 @@ namespace BlazorEcommerce_Client.Service
         {
             await _localStorageService.RemoveItemAsync(StaticDetails.Local_Token);
             await _localStorageService.RemoveItemAsync(StaticDetails.Local_UserDetails);
+            ((AuthStateProvider)_authenticationStateProvider).NotifyUserLogout();
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
         public async Task<SignUpResponseDTO> RegisterUser(SignUpRequestDTO signUpRequestDTO)

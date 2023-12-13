@@ -8,11 +8,11 @@ using System.Security.Claims;
 
 namespace BlazorEcommerce_Client.Service
 {
-    public class AuthStateProvider: AuthenticationStateProvider
+    public class AuthStateProvider : AuthenticationStateProvider
     {
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _LocalStorageService;
-        public AuthStateProvider(HttpClient httpClient,ILocalStorageService localStorage)
+        public AuthStateProvider(HttpClient httpClient, ILocalStorageService localStorage)
         {
             _httpClient = httpClient;
             _LocalStorageService = localStorage;
@@ -27,6 +27,18 @@ namespace BlazorEcommerce_Client.Service
             }
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
             return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), "jwtAuthType")));
+        }
+
+        public void NotifyUserLoggedIn(string token)
+        {
+            var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), "jwtAuthType"));
+            var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
+            NotifyAuthenticationStateChanged(authState);
+        }
+        public void NotifyUserLogout()
+        {
+            var authState =Task.FromResult( new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity())));
+            NotifyAuthenticationStateChanged(authState);
         }
     }
 }

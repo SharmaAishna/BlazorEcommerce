@@ -1,7 +1,9 @@
 ﻿@page "/summary"
+@using Microsoft.AspNetCore.Authorization
 @inject IJSRuntime _jsRuntime
 @inject ILocalStorageService _localStorage
 @inject IProductService _productService
+@attribute [Authorize]
 
 @if (IsProcessing)
 {

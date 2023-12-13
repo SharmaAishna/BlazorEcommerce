@@ -3,6 +3,7 @@
 @inject IJSRuntime _jsRuntime
 @inject ILocalStorageService _localStorage
 @inject IProductService _productService
+@inject IOrderService _orderService
 @attribute [Authorize]
 
 @if (IsProcessing)
@@ -144,10 +145,30 @@ else
             Order.OrderDetailsDTO.Add(orderDetailDTO);
             Order.OrderHeaderDTO.OrderTotal += (cart.Count * productPrice.Price);
         }
+        if(await _localStorage.GetItemAsync<UserDTO>(StaticDetails.Local_UserDetails) != null)
+        {
+            var userInfo = await _localStorage.GetItemAsync<UserDTO>(StaticDetails.Local_UserDetails);
+            Order.OrderHeaderDTO.UserId = userInfo.Id;
+            Order.OrderHeaderDTO.Name = userInfo.Name;
+            Order.OrderHeaderDTO.Email = userInfo.Email;
+            Order.OrderHeaderDTO.PhoneNumber = userInfo.PhoneNumber;
+        }
         IsProcessing = false;
     }
     private async Task HandleCheckOut()
     {
-        
+        try
+        {
+            var paymentDto = new StripePaymentDTO()
+                {
+                    Order = Order
+                };
+            var orderHeaderSaved = await _orderService.Create(paymentDto);
+        }
+        catch(Exception ex)
+        {
+            await _jsRuntime.ToastrError(ex.Message);
+        }
     }
+   
 }

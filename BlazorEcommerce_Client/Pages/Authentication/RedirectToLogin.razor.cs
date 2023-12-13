@@ -25,8 +25,12 @@ namespace BlazorEcommerce_Client.Pages.Authentication
                 }
                 else
                 { 
-                    _navigationManager.NavigateTo($"login?returnUrl?={returnUrl}");
+                    _navigationManager.NavigateTo($"login?returnUrl={returnUrl}");
                 }
+            }
+            else
+            {
+                notAuthorized = true;
             }
         }
     }

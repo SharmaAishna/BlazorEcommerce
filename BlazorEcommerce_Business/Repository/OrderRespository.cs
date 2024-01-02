@@ -31,13 +31,14 @@ namespace BlazorEcommerce_Business.Repository
                 var obj = _mapper.Map<OrderDTO, Order>(orderDTO);
                 _db.OrderHeaders.Add(obj.OrderHeader);
                 await _db.SaveChangesAsync();
+
                 foreach (var details in obj.OrderDetails)
                 {
                     details.OrderHeaderId = obj.OrderHeader.Id;
-
                 }
                 _db.OrderDetails.AddRange(obj.OrderDetails);
                 await _db.SaveChangesAsync();
+
                 return new OrderDTO()
                 {
                     OrderHeaderDTO = _mapper.Map<OrderHeader, OrderHeaderDTO>(obj.OrderHeader),
@@ -141,7 +142,6 @@ namespace BlazorEcommerce_Business.Repository
             {
                 data.ShippingDate = DateTime.Now;
             }
-
             await _db.SaveChangesAsync();
             return true;
 

@@ -15,7 +15,7 @@ namespace EcommerceModel
         public int OrderHeaderId { get; set; }
         [Required]
         public int ProductId { get; set; }
-        public  ProductDTO Product { get; set; }
+        public ProductDTO Product { get; set; }
         [Required]
         public int Count { get; set; }
         [Required]

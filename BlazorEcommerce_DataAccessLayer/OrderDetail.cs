@@ -18,6 +18,7 @@ namespace BlazorEcommerce_DataAccessLayer
         [ForeignKey("ProductId")]
         [NotMapped]
         public virtual Product Product { get; set; }
+
         [Required]
         public int Count { get; set; }
         [Required]

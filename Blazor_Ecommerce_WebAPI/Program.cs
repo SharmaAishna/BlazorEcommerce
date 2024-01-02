@@ -67,8 +67,8 @@ builder.Services.AddAuthentication(opt =>
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = true,
         ValidateAudience = true,
+        ValidateIssuer = true,
         ValidAudience = apiSettings.ValidAudience,
         ValidIssuer = apiSettings.ValidIssuer,
         ClockSkew = TimeSpan.Zero
@@ -78,6 +78,7 @@ builder.Services.AddAuthentication(opt =>
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRespository>();
 builder.Services.AddCors(o => o.AddPolicy("Ecommerce", builder =>
 {
     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();

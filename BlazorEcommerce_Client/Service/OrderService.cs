@@ -58,7 +58,7 @@ namespace BlazorEcommerce_Client.Service
             else
             {
                 var errorModel = JsonConvert.DeserializeObject<ErrorModelDTO>(content);
-                throw new Exception(errorModel.ErrorMessage);
+                throw new Exception(errorModel?.ErrorMessage);
             }
 
         }

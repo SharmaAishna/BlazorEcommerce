@@ -30,7 +30,7 @@ else
                     <div class="row border p-1 m-1">
 
                         <div class="col-3 col-md-2 ">
-                            <img src="@prod.Product.ImageUrl" width="100%">
+                            <img src="@prod.Product.ImageUrl" class="w-100">
                         </div>
                         <div class="col-5 col-md-5 ">
                             <span class="">Product : @prod.ProductName </span><br />
@@ -143,7 +143,7 @@ else
                     Product = product
                 };
             Order.OrderDetails.Add(orderDetailDTO);
-            Order.OrderHeader.OrderTotal += (cart.Count * productPrice.Price);
+            Order.OrderHeader.OrderTotal += (item.Count * productPrice.Price);
         }
         if (await _localStorage.GetItemAsync<UserDTO>(StaticDetails.Local_UserDetails) != null)
         {

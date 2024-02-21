@@ -25,7 +25,7 @@ else
                         <a href="/cart" class="btn btn-secondary btn-block">Back to cart</a>
                     </div>
                 </div>
-                @foreach (var prod in Order.OrderDetailsDTO)
+                @foreach (var prod in Order.OrderDetails)
                 {
                     <div class="row border p-1 m-1">
 
@@ -51,50 +51,50 @@ else
 
                 <div class="row" style="text-align:right">
                     <div class="col-12 px-3">
-                        <h3> Order Total : <span class="text-secondary">@Order.OrderHeaderDTO.OrderTotal.ToString("c")</span> </h3>
+                        <h3> Order Total : <span class="text-secondary">@Order.OrderHeader.OrderTotal.ToString("c")</span> </h3>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 col-lg-5 p-4 ml-4 ml-md-0 mt-4 mt-md-0 border">
-                <EditForm Model="Order.OrderHeaderDTO" OnValidSubmit="HandleCheckOut">
+                <EditForm Model="Order.OrderHeader" OnValidSubmit="HandleCheckOut">
                     <DataAnnotationsValidator />
                     <div class="row px-2 text-success border-bottom"><div class="col-7 py-1"><p style="font-size:x-large;margin:0px;">Enter Details</p></div></div>
 
                     <div class="form-group pt-2">
                         <label class="text-warning">Name</label>
-                        <InputText @bind-Value="Order.OrderHeaderDTO.Name" type="text" class="form-control" />
-                        <ValidationMessage For="()=>Order.OrderHeaderDTO.Name"></ValidationMessage>
+                        <InputText @bind-Value="Order.OrderHeader.Name" type="text" class="form-control" />
+                        <ValidationMessage For="()=>Order.OrderHeader.Name"></ValidationMessage>
                     </div>
                     <div class="form-group pt-2">
                         <label class="text-warning">Phone</label>
-                        <InputText @bind-Value="Order.OrderHeaderDTO.PhoneNumber" type="text" class="form-control" />
-                        <ValidationMessage For="()=>Order.OrderHeaderDTO.PhoneNumber"></ValidationMessage>
+                        <InputText @bind-Value="Order.OrderHeader.PhoneNumber" type="text" class="form-control" />
+                        <ValidationMessage For="()=>Order.OrderHeader.PhoneNumber"></ValidationMessage>
                     </div>
                     <div class="form-group pt-2">
                         <label class="text-warning">Email</label>
-                        <InputText @bind-Value="Order.OrderHeaderDTO.Email" type="text" class="form-control" />
-                        <ValidationMessage For="()=>Order.OrderHeaderDTO.Email"></ValidationMessage>
+                        <InputText @bind-Value="Order.OrderHeader.Email" type="text" class="form-control" />
+                        <ValidationMessage For="()=>Order.OrderHeader.Email"></ValidationMessage>
                     </div>
                     <div class="form-group pt-2">
                         <label class="text-warning">Street Address</label>
-                        <InputText @bind-Value="Order.OrderHeaderDTO.StreetAddress" type="text" class="form-control" />
-                        <ValidationMessage For="()=>Order.OrderHeaderDTO.StreetAddress"></ValidationMessage>
+                        <InputText @bind-Value="Order.OrderHeader.StreetAddress" type="text" class="form-control" />
+                        <ValidationMessage For="()=>Order.OrderHeader.StreetAddress"></ValidationMessage>
                     </div>
                     <div class="form-group pt-2">
                         <label class="text-warning">City</label>
-                        <InputText @bind-Value="Order.OrderHeaderDTO.City" type="text" class="form-control" />
-                        <ValidationMessage For="()=>Order.OrderHeaderDTO.City"></ValidationMessage>
+                        <InputText @bind-Value="Order.OrderHeader.City" type="text" class="form-control" />
+                        <ValidationMessage For="()=>Order.OrderHeader.City"></ValidationMessage>
                     </div>
                     <div class="form-group pt-2">
                         <label class="text-warning">State</label>
-                        <InputText @bind-Value="Order.OrderHeaderDTO.State" type="text" class="form-control" />
-                        <ValidationMessage For="()=>Order.OrderHeaderDTO.State"></ValidationMessage>
+                        <InputText @bind-Value="Order.OrderHeader.State" type="text" class="form-control" />
+                        <ValidationMessage For="()=>Order.OrderHeader.State"></ValidationMessage>
                     </div>
                     <div class="form-group pt-2">
                         <label class="text-warning">Postal Code</label>
-                        <InputText @bind-Value="Order.OrderHeaderDTO.PostalCode" type="text" class="form-control" />
-                        <ValidationMessage For="()=>Order.OrderHeaderDTO.PostalCode"></ValidationMessage>
+                        <InputText @bind-Value="Order.OrderHeader.PostalCode" type="text" class="form-control" />
+                        <ValidationMessage For="()=>Order.OrderHeader.PostalCode"></ValidationMessage>
                     </div>
 
 
@@ -120,12 +120,12 @@ else
         products = await _productService.GetAll();
         Order = new()
             {
-                OrderHeaderDTO = new()
+                OrderHeader = new()
                 {
                     OrderTotal = 0,
                     Status = StaticDetails.Status_Pending
                 },
-                OrderDetailsDTO = new List<OrderDetailDTO>()
+                OrderDetails = new List<OrderDetailDTO>()
 
             };
         foreach (var item in cart)
@@ -142,16 +142,16 @@ else
                     ProductName = product.Name,
                     Product = product
                 };
-            Order.OrderDetailsDTO.Add(orderDetailDTO);
-            Order.OrderHeaderDTO.OrderTotal += (cart.Count * productPrice.Price);
+            Order.OrderDetails.Add(orderDetailDTO);
+            Order.OrderHeader.OrderTotal += (cart.Count * productPrice.Price);
         }
         if (await _localStorage.GetItemAsync<UserDTO>(StaticDetails.Local_UserDetails) != null)
         {
             var userInfo = await _localStorage.GetItemAsync<UserDTO>(StaticDetails.Local_UserDetails);
-            Order.OrderHeaderDTO.UserId = userInfo.Id;
-            Order.OrderHeaderDTO.Name = userInfo.Name;
-            Order.OrderHeaderDTO.Email = userInfo.Email;
-            Order.OrderHeaderDTO.PhoneNumber = userInfo.PhoneNumber;
+            Order.OrderHeader.UserId = userInfo.Id;
+            Order.OrderHeader.Name = userInfo.Name;
+            Order.OrderHeader.Email = userInfo.Email;
+            Order.OrderHeader.PhoneNumber = userInfo.PhoneNumber;
         }
         IsProcessing = false;
     }

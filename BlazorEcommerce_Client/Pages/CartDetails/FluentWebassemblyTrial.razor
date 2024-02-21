@@ -1,0 +1,48 @@
+﻿@* @if (IsProcessing)
+{
+    <FluentProgressRing />
+}
+else
+{
+    <FluentGrid>
+        <FluentStack Orientation="Orientation.Vertical" VerticalGap="10">
+
+            <FluentGridItem xs="0">
+                <FluentLabel Typo="Typography.H2">Please Select Process Order</FluentLabel>
+
+                <FluentCard Height="400px" Width="100%" Style="margin:16px 0px; padding:16px;">
+                    <FluentDataGrid Items="ReferenceDoc.AsQueryable()" TGridItem="ReferenceDocumentResponse" ResizableColumns=true Virtualize="true" GridTemplateColumns="1.2fr 1fr 1.2fr" Style="width: 100%; overflow:auto;">
+                        <PropertyColumn Property="@(c => c.ReferenceDocumentNumber)" Sortable="true" Title="Process Order Number" Align="Align.Center" />
+                        <PropertyColumn Title="Reference Document Type" Property="@(c => c.ReferenceDocumentType)" Sortable="true" Align="Align.Center" />
+                        <TemplateColumn Title="Select" Align="Align.Center">
+                            <FluentButton IconEnd="@(new Icons.Regular.Size16.BookOpen())" OnClick="@(() => HandleReference(context))" />
+                        </TemplateColumn>
+                    </FluentDataGrid>
+                </FluentCard>
+            </FluentGridItem>
+
+            @if (ReferenceVM.ProcessOrder is not null)
+            {
+                <FluentGridItem xs="0"><FluentCard>Process Order: @ReferenceVM.ReferenceNo</FluentCard></FluentGridItem>
+                <FluentGridItem xs="0">
+                    <FluentLabel Typo="Typography.H2">Please Select DDL Update Order</FluentLabel>
+                    <FluentCard Height="400px" Width="100%" Style="margin:16px 0px; padding:16px;">
+                        <!-- Second FluentDataGrid is only visible when a row is selected in the first FluentDataGrid -->
+                        @if (ReferenceVM.ProcessOrder is not null)
+                        {
+                            <FluentDataGrid Items="Order.AsQueryable()" TGridItem="DdlUpdateOrderResponse" ResizableColumns=true Virtualize="true" GridTemplateColumns="1fr .5fr 1.2fr .7fr" Style="width: 100%; overflow:auto;">
+                                <PropertyColumn Property="c =>c.DdlUpdateOrderNumber" Title="DDL Update Order Number" Sortable="true" Align="Align.Center" />
+                                <PropertyColumn Property="c =>c.ReferenceItemNumber" Title="Phase" Sortable="true" Align="Align.Center" />
+                                <PropertyColumn Property="c =>c.ReferenceItemDescription" Title="Phase Description" Sortable="true" Align="Align.Center" />
+                                <TemplateColumn Title="Select" Align="Align.Center">
+                                    <FluentButton IconEnd="@(new Icons.Regular.Size16.BookOpen())" OnClick="@(() => HandleUpdateOrderCheckCode(context))" />
+                                </TemplateColumn>
+                            </FluentDataGrid>
+                        }
+                    </FluentCard>
+                </FluentGridItem>
+            }
+        </FluentStack>
+    </FluentGrid>
+}
+ *@

@@ -8,7 +8,7 @@ namespace EcommerceModel
 {
     public class OrderDTO
     {
-        public OrderHeaderDTO OrderHeaderDTO { get; set; }
-        public List<OrderDetailDTO> OrderDetailsDTO { get; set; }
+        public OrderHeaderDTO OrderHeader { get; set; }
+        public List<OrderDetailDTO> OrderDetails { get; set; }
     }
 }

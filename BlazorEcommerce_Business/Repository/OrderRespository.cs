@@ -6,11 +6,7 @@ using BlazorEcommerce_DataAccessLayer.Data;
 using BlazorEcommerce_DataAccessLayer.ViewModel;
 using EcommerceModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BlazorEcommerce_Business.Repository
 {
@@ -29,21 +25,27 @@ namespace BlazorEcommerce_Business.Repository
             try
             {
                 var obj = _mapper.Map<OrderDTO, Order>(orderDTO);
-                _db.OrderHeaders.Add(obj.OrderHeader);
-                await _db.SaveChangesAsync();
-
-                foreach (var details in obj.OrderDetails)
+                if(obj.OrderHeader != null && obj.OrderDetails!=null)
                 {
-                    details.OrderHeaderId = obj.OrderHeader.Id;
+                    _db.OrderHeaders.Add(obj.OrderHeader);
+                    await _db.SaveChangesAsync();
+
+                    foreach (var details in obj.OrderDetails)
+                    {
+                        details.OrderHeaderId = obj.OrderHeader.Id;
+
+                    }
+                    _db.OrderDetails.AddRange(obj.OrderDetails);
+                    await _db.SaveChangesAsync();
+
+                    return new OrderDTO()
+                    {
+                        OrderHeader = _mapper.Map<OrderHeader, OrderHeaderDTO>(obj.OrderHeader),
+                        OrderDetails = _mapper.Map<IEnumerable<OrderDetail>, IEnumerable<OrderDetailDTO>>(obj.OrderDetails).ToList()
+                    };
+
                 }
-                _db.OrderDetails.AddRange(obj.OrderDetails);
-                await _db.SaveChangesAsync();
 
-                return new OrderDTO()
-                {
-                    OrderHeaderDTO = _mapper.Map<OrderHeader, OrderHeaderDTO>(obj.OrderHeader),
-                    OrderDetailsDTO = _mapper.Map<IEnumerable<OrderDetail>, IEnumerable<OrderDetailDTO>>(obj.OrderDetails).ToList()
-                };
 
 
             }

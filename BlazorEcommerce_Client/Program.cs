@@ -12,6 +12,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44319") });
 builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<IPaymentService,PaymentService>();
 builder.Services.AddScoped<ICartService,CartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddBlazoredLocalStorage();

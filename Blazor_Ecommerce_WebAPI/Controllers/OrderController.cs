@@ -4,6 +4,8 @@ using EcommerceModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stripe.Checkout;
+
 
 namespace Blazor_Ecommerce_WebAPI.Controllers
 {
@@ -23,7 +25,7 @@ namespace Blazor_Ecommerce_WebAPI.Controllers
         /// <returns></returns>
 
         [HttpGet]
-       
+
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _orderRepository.GetAll());
@@ -47,7 +49,7 @@ namespace Blazor_Ecommerce_WebAPI.Controllers
                 });
 
             }
-            var orderHeader =await _orderRepository.GetById(orderHeaderId.Value);
+            var orderHeader = await _orderRepository.GetById(orderHeaderId.Value);
             if (orderHeader == null)
             {
                 return BadRequest(new ErrorModelDTO()
@@ -66,6 +68,28 @@ namespace Blazor_Ecommerce_WebAPI.Controllers
             paymentDTO.Order.OrderHeader.OrderDate = DateTime.Now;
             var result = await _orderRepository.Create(paymentDTO.Order);
             return Ok(result);
+        }
+
+        [HttpPost]
+        [ActionName("paymentsuccessful")]
+        public async Task<IActionResult> PaymentSuccessful([FromBody] OrderHeaderDTO orderHeaderDTO)
+        {
+            var service = new SessionService();
+            var sessionDetails = service.Get(orderHeaderDTO.SessionId);
+            if (sessionDetails.PaymentStatus == "paid")
+            {
+                var result = await _orderRepository.MarkPaymentSuccessful(orderHeaderDTO.Id);
+                if (result == null)
+                {
+                    return BadRequest(new ErrorModelDTO()
+                    {
+                        ErrorMessage = "Can't mark payment as successfull"
+                    });
+
+                }
+                return Ok(result);
+            }
+            return BadRequest();
         }
     }
 }

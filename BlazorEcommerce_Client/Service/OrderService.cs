@@ -58,9 +58,24 @@ namespace BlazorEcommerce_Client.Service
             else
             {
                 var errorModel = JsonConvert.DeserializeObject<ErrorModelDTO>(content);
-                throw new Exception(errorModel?.ErrorMessage);
+                throw new Exception($"Error: {errorModel?.ErrorMessage}");
             }
 
+        }
+
+        public async Task<OrderHeaderDTO> MarkPaymentSuccessful(OrderHeaderDTO orderHeaderDTO)
+        {
+            var content = JsonConvert.SerializeObject(orderHeaderDTO);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/order/paymentsuccessful", bodyContent);
+            string responseResult = response.Content.ReadAsStringAsync().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var result = JsonConvert.DeserializeObject<OrderHeaderDTO>(responseResult);
+                return result;
+            }
+            var errorModel=JsonConvert.DeserializeObject<ErrorModelDTO>(responseResult);
+            throw new Exception($"Error: {errorModel?.ErrorMessage}");
         }
     }
 }

@@ -21,24 +21,24 @@ namespace BlazorEcommerce_DataAccessLayer
         [Required]
         public DateTime ShippingDate { get; set; }
         [Required]
-        public string Status { get; set; }
+        public string? Status { get; set; }
         //stripe payment
         public string? SessionId { get; set; }
         public string? PaymentInternId { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Required]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         [Required]
-        public string StreetAddress { get; set; }
+        public string? StreetAddress { get; set; }
         [Required]
-        public string State { get; set; }
+        public string? State { get; set; }
         [Required]
-        public string City { get; set; }
+        public string? City { get; set; }
         [Required]
-        public string PostalCode { get; set; }
+        public string? PostalCode { get; set; }
         //want to use login email address but giving functionality to put new Email address too
         [Required]
-        public string Email { get; set; }
+        public string? Email { get; set; }
     }
 }

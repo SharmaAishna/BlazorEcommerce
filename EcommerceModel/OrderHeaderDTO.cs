@@ -12,7 +12,7 @@ namespace EcommerceModel
       
         public int Id { get; set; }
         [Required]
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
      
         [Required]
         [Display(Name = "Order Total")]
@@ -23,28 +23,28 @@ namespace EcommerceModel
         [Display(Name = "Shipping Date")]
         public DateTime ShippingDate { get; set; }
         [Required]
-        public string Status { get; set; }
+        public string? Status { get; set; }
         //stripe payment
         public string? SessionId { get; set; }
         public string? PaymentInternId { get; set; }
         [Required]
         [Display(Name = "Name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Required]
         [Display(Name = "Phone Number")]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         [Required]
         [Display(Name = "Street Address")]
-        public string StreetAddress { get; set; }
+        public string? StreetAddress { get; set; }
         [Required]
-        public string State { get; set; }
+        public string? State { get; set; }
         [Required]
-        public string City { get; set; }
+        public string? City { get; set; }
         [Required]
         [Display(Name = "Postal Code")]
-        public string PostalCode { get; set; }
+        public string? PostalCode { get; set; }
         [Required]
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
     }
 }

@@ -31,7 +31,7 @@ else
                     <div class="row border p-1 m-1">
 
                         <div class="col-3 col-md-2 ">
-                            <img src="@prod.Product.ImageUrl" class="w-100">
+                            <img src="@prod.Product?.ImageUrl" class="w-100">
                         </div>
                         <div class="col-5 col-md-5 ">
                             <span class="">Product : @prod.ProductName </span><br />
@@ -52,7 +52,7 @@ else
 
                 <div class="row" style="text-align:right">
                     <div class="col-12 px-3">
-                        <h3> Order Total : <span class="text-secondary">@Order.OrderHeader.OrderTotal.ToString("c")</span> </h3>
+                        <h3> Order Total : <span class="text-secondary">@Order.OrderHeader?.OrderTotal.ToString("c")</span> </h3>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@ else
 @code {
     private OrderDTO Order { get; set; } = null;
     private bool IsProcessing { get; set; } = false;
-    private IEnumerable<ProductDTO> products { get; set; }
+    private IEnumerable<ProductDTO>? products { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -119,6 +119,7 @@ else
 
         List<ShoppingCart> cart = await _localStorage.GetItemAsync<List<ShoppingCart>>(StaticDetails.ShoppingCart);
         products = await _productService.GetAll();
+
         Order = new()
             {
                 OrderHeader = new()
@@ -131,16 +132,16 @@ else
             };
         foreach (var item in cart)
         {
-            ProductDTO product = products.FirstOrDefault(prod => prod.Id == item.ProductId);
-            ProductPriceDTO productPrice = product.ProductPrices.FirstOrDefault(orderProd => orderProd.Id == item.ProductPriceId);
+            ProductDTO? product = products.FirstOrDefault(prod => prod.Id == item.ProductId);
+            ProductPriceDTO? productPrice = product?.ProductPrices?.FirstOrDefault(orderProd => orderProd.Id == item.ProductPriceId);
 
             OrderDetailDTO orderDetailDTO = new()
                 {
                     ProductId = item.ProductId,
-                    Size = productPrice.Size,
+                    Size = productPrice?.Size,
                     Count = item.Count,
                     Price = productPrice.Price,
-                    ProductName = product.Name,
+                    ProductName = product?.Name,
                     Product = product
                 };
             Order.OrderDetails.Add(orderDetailDTO);
@@ -155,7 +156,9 @@ else
             Order.OrderHeader.PhoneNumber = userInfo.PhoneNumber;
         }
         IsProcessing = false;
+
     }
+
     private async Task HandleCheckOut()
     {
         try

@@ -36,16 +36,16 @@ else
                     {
                         <div class="row">
                             <div class="col-3 col-md-1 text-center py-2">
-                                <img src="@item.Product.ImageUrl" class="rounded w-100"  />
+                                <img src="@item.Product?.ImageUrl" class="rounded w-100"  />
                             </div>
                             <div class="col-9 text-sm-center text-md-start col-md-4 pt-lg-1 ">
-                                <h4><strong>@item.Product.Name</strong></h4>
+                                <h4><strong>@item.Product?.Name</strong></h4>
 
                                 <div class="badge bg-primary text-center" style="font-size:12px;">
-                                    @item.Product.Category.Name
+                                    @item.Product?.Category?.Name
                                 </div>
                                 <div class="badge bg-info text-center" style="font-size:12px;">
-                                    @item.Product.Color
+                                    @item.Product?.Color
                                 </div>
                                 <div><p>Size : @item.ProductPrice.Size</p></div>
                             </div>
@@ -104,7 +104,7 @@ else
     public bool IsProcessing { get; set; } = false;
 
     private List<ShoppingCart> shoppingCart = new();
-    private IEnumerable<ProductDTO> products { get; set; }
+    private IEnumerable<ProductDTO>? products { get; set; }
     private double OrderTotal { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
@@ -123,8 +123,8 @@ else
         shoppingCart = await _LocalStorage.GetItemAsync<List<ShoppingCart>>(StaticDetails.ShoppingCart);
         foreach (var cart in shoppingCart)
         {
-            cart.Product = products.FirstOrDefault(u => u.Id == cart.ProductId);
-            cart.ProductPrice = cart.Product.ProductPrices.FirstOrDefault(u => u.Id == cart.ProductPriceId);
+            cart.Product = products?.FirstOrDefault(u => u.Id == cart.ProductId);
+            cart.ProductPrice = cart.Product?.ProductPrices?.FirstOrDefault(u => u.Id == cart.ProductPriceId);
             OrderTotal += (cart.ProductPrice.Price * cart.Count);
         }
     }

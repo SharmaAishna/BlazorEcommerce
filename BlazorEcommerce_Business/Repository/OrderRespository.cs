@@ -46,12 +46,10 @@ namespace BlazorEcommerce_Business.Repository
 
                 }
 
-
-
             }
             catch (Exception ex)
             {
-                throw ex;
+               throw new Exception(ex.ToString());
             }
             return orderDTO;
 
@@ -80,7 +78,7 @@ namespace BlazorEcommerce_Business.Repository
                 Order order = new()
                 {
                     OrderHeader = header,
-                    OrderDetails = orderDetailList.Where(u => u.OrderHeaderId == header.Id).ToList(),
+                    OrderDetails = orderDetailList.Where(u => u.OrderHeaderId == header.Id),
                 };
                 OrderFromDb.Add(order);
             }
@@ -94,7 +92,7 @@ namespace BlazorEcommerce_Business.Repository
             Order order = new()
             {
                 OrderHeader = _db.OrderHeaders.FirstOrDefault(u => u.Id == id),
-                OrderDetails = _db.OrderDetails.Where(u => u.OrderHeaderId == id).ToList(),
+                OrderDetails = _db.OrderDetails.Where(u => u.OrderHeaderId == id),
             };
             if (order != null)
             {

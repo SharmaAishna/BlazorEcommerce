@@ -38,8 +38,8 @@ else
 
         <GridPageSettings PageSize="5" PageCount="5" PageSizes="true"></GridPageSettings>
         <GridColumns>
-            <GridColumn IsPrimaryKey="true" AllowAdding="false" Field=@nameof(ProductPriceDTO.Id) HeaderText="Id" TextAlign="TextAlign.Center"></GridColumn>
-            <GridColumn Field=@nameof(ProductPriceDTO.Size) HeaderText="Size" TextAlign="TextAlign.Center">
+            <GridColumn IsPrimaryKey="true" AllowAdding="false" Field=@nameof(ProductPriceDTO.Id) HeaderText="Id" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+            <GridColumn Field=@nameof(ProductPriceDTO.Size) HeaderText="Size" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
                 <EditTemplate>
                     <Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="SizeList" TItem="string" TValue="string"
                     @bind-Value="((context as ProductPriceDTO).Size)">
@@ -47,7 +47,7 @@ else
                     </Syncfusion.Blazor.DropDowns.SfDropDownList>
                 </EditTemplate>
             </GridColumn>
-            <GridColumn Field=@nameof(ProductPriceDTO.Price) HeaderText="Price" Format="C2" TextAlign="TextAlign.Center"></GridColumn>
+            <GridColumn Field=@nameof(ProductPriceDTO.Price) HeaderText="Price" Format="C2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
 
             <GridColumn HeaderText="Manage Records" Width="150">
                 <GridCommandColumns>

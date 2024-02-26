@@ -14,7 +14,7 @@ namespace EcommerceModel
         [Required]
         public int ProductId { get; set; }
         [Required]
-        public string Size { get; set; }
+        public string? Size { get; set; }
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Price must be greater than 1")]
         public double Price { get; set; }

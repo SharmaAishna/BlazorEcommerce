@@ -11,6 +11,6 @@ namespace EcommerceModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Please Enter name..")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

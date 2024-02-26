@@ -18,19 +18,19 @@ else
         <div class="card container mt-4">
             <div class="card-header ml-0  row">
                 <div class="col-12 col-md-6">
-                    <h1 class="text-primary">@Product.Name</h1>
+                    <h1 class="text-primary">@Product?.Name</h1>
                 </div>
 
                 <div class="col-12 col-md-6 text-end pt-4">
-                    <span class="badge bg-info pt-2" style="height:30px;">@Product.Category.Name</span>
-                    <span class="badge bg-warning pt-2" style="height:30px;">@Product.Color</span>
+                    <span class="badge bg-info pt-2" style="height:30px;">@Product?.Category?.Name</span>
+                    <span class="badge bg-warning pt-2" style="height:30px;">@Product?.Color</span>
                 </div>
             </div>
             <div class="card-body">
                 <div class="container rounded p-2">
                     <div class="row">
                         <div class="col-10">
-                            <p>@((MarkupString)Product.Description)</p>
+                            <p>@((MarkupString)Product?.Description)</p>
                             <div class="row">
                                 @foreach (var productPrice in Product.ProductPrices)
                                 {
@@ -120,9 +120,9 @@ else
         IsProcessing = false;
     }
 
-    private async Task SelectedProductPrice(MouseEventArgs e, int productPriceId)
+    private void SelectedProductPrice(MouseEventArgs e, int productPriceId)
     {
-        detailViewModel.ProductPrice = Product.ProductPrices.FirstOrDefault(u => u.Id == productPriceId);
+        detailViewModel.ProductPrice = Product.ProductPrices?.FirstOrDefault(u => u.Id == productPriceId);
         detailViewModel.SelectedProductPriceID = productPriceId;
     }
 

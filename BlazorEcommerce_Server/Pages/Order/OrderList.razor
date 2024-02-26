@@ -6,7 +6,7 @@
     <h4 class="card-title text-info">Order's List</h4>
     @if (OrderHeaders.Any())
     {
-        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
                         Data="OrderHeaders" TItem="OrderHeaderDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
             <Columns>
                 <RadzenDataGridColumn TItem="OrderHeaderDTO" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="Radzen.TextAlign.Center" />

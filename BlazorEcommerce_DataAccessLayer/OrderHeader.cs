@@ -40,5 +40,7 @@ namespace BlazorEcommerce_DataAccessLayer
         //want to use login email address but giving functionality to put new Email address too
         [Required]
         public string? Email { get; set; }
+        public string? Tracking { get; set; }
+        public string? Carrier { get; set; }
     }
 }

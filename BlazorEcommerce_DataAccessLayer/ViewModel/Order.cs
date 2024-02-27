@@ -8,7 +8,7 @@ namespace BlazorEcommerce_DataAccessLayer.ViewModel
 {
     public class Order
     {
-        public OrderHeader? OrderHeader { get; set; }
-        public IEnumerable<OrderDetail>? OrderDetails { get; set; }
+        public OrderHeader OrderHeader { get; set; }
+        public IEnumerable<OrderDetail> OrderDetails { get; set; }
     }
 }

@@ -17,15 +17,15 @@ namespace BlazorEcommerce_DataAccessLayer
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         [NotMapped]
-        public virtual Product? Product { get; set; }
+        public virtual Product Product { get; set; }
 
         [Required]
         public int Count { get; set; }
         [Required]
         public double Price { get; set; }
         [Required]
-        public string? Size { get; set; }
+        public string Size { get; set; }
         [Required]
-        public string? ProductName { get; set; }
+        public string ProductName { get; set; }
     }
 }

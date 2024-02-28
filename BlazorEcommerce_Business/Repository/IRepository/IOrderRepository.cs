@@ -14,7 +14,7 @@ namespace BlazorEcommerce_Business.Repository.IRepository
         public Task<OrderDTO> Create(OrderDTO orderDTO);
         public Task<int> DeleteById(int id);
         public Task<OrderHeaderDTO> UpdateHeader(OrderHeaderDTO orderHeaderDTO);
-        public Task<OrderHeaderDTO> MarkPaymentSuccessful(int id);
+        public Task<OrderHeaderDTO> MarkPaymentSuccessful(int id,string paymentIntentId);
         public Task<bool> UpdateOrderStatus(int orderId, string status);
     }
 }

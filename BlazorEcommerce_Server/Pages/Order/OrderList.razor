@@ -15,7 +15,8 @@
                 <RadzenDataGridColumn TItem="OrderHeaderDTO" Property="Email" Title="Email" Width="160px" />
                 <RadzenDataGridColumn TItem="OrderHeaderDTO" Property="OrderTotal" Title="Order Total" Width="160px" />
                 <RadzenDataGridColumn TItem="OrderHeaderDTO" Property="OrderDate" Title="Order Date" FormatString="{0:d}" Width="160px" />
-                <RadzenDataGridColumn TItem="OrderHeaderDTO" Title="Details" >
+                <RadzenDataGridColumn TItem="OrderHeaderDTO" Property="Status" Title="Status" Width="160px" />
+                <RadzenDataGridColumn TItem="OrderHeaderDTO" Title="Details">
                     <Template Context="data">
                         <RadzenButton Click="(args=> OrderDetails(data.Id))" Text="Details" ButtonStyle="ButtonStyle.Success"></RadzenButton>
                     </Template>

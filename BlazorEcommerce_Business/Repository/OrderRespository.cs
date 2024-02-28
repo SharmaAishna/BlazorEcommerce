@@ -91,6 +91,7 @@ namespace BlazorEcommerce_Business.Repository
         {
             Order order = new()
             {
+
                 OrderHeader = _db.OrderHeaders.FirstOrDefault(u => u.Id == id),
                 OrderDetails = _db.OrderDetails.Where(u => u.OrderHeaderId == id),
             };
@@ -102,7 +103,7 @@ namespace BlazorEcommerce_Business.Repository
 
         }
 
-        public async Task<OrderHeaderDTO> MarkPaymentSuccessful(int id)
+        public async Task<OrderHeaderDTO> MarkPaymentSuccessful(int id, string paymentIntentId)
         {
             var data = await _db.OrderHeaders.FindAsync(id);
             if (data == null)
@@ -111,6 +112,7 @@ namespace BlazorEcommerce_Business.Repository
             }
             if (data.Status == StaticDetails.Status_Pending)
             {
+                data.PaymentInternId=paymentIntentId;
                 data.Status = StaticDetails.Status_Confirmed;
                 await _db.SaveChangesAsync();
                 return _mapper.Map<OrderHeader, OrderHeaderDTO>(data);
@@ -122,10 +124,25 @@ namespace BlazorEcommerce_Business.Repository
         {
             if (orderHeaderDTO != null)
             {
-                var OrderHeader = _mapper.Map<OrderHeaderDTO, OrderHeader>(orderHeaderDTO);
-                _db.OrderHeaders.Update(OrderHeader);
-                await _db.SaveChangesAsync();
-                return _mapper.Map<OrderHeader, OrderHeaderDTO>(OrderHeader);
+                //Normal update method
+                //var OrderHeader = _mapper.Map<OrderHeaderDTO, OrderHeader>(orderHeaderDTO);
+                //_db.OrderHeaders.Update(OrderHeader);
+                var orderHeaderFromDb =_db.OrderHeaders.FirstOrDefault(u =>u.Id == orderHeaderDTO.Id);
+                if (orderHeaderFromDb != null)
+                {
+                    orderHeaderFromDb.Name = orderHeaderDTO.Name;
+                    orderHeaderFromDb.PhoneNumber = orderHeaderDTO.PhoneNumber;
+                    orderHeaderFromDb.Carrier = orderHeaderDTO.Carrier;
+                    orderHeaderFromDb.Tracking = orderHeaderDTO.Tracking;
+                    orderHeaderFromDb.StreetAddress = orderHeaderDTO.StreetAddress;
+                    orderHeaderFromDb.City = orderHeaderDTO.City;
+                    orderHeaderFromDb.State = orderHeaderDTO.State;
+                    orderHeaderFromDb.PostalCode = orderHeaderDTO.PostalCode;
+                    orderHeaderFromDb.Status = orderHeaderDTO.Status;
+                    await _db.SaveChangesAsync();
+                    return _mapper.Map<OrderHeader, OrderHeaderDTO>(orderHeaderFromDb);
+
+                }
             }
             return new OrderHeaderDTO();
         }

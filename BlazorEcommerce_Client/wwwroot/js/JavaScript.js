@@ -13,7 +13,7 @@ window.ShowSwal = (type, message) => {
         Swal.fire('Success Notification!', message, 'success');
     }
     if (type === "error") {
-        Swal.fire('Error Notification', message,'error' );
+        Swal.fire('Error Notification', message, 'error');
     }
 
 

@@ -2,6 +2,7 @@
 @inject IOrderRepository _orderRepository
 @inject IJSRuntime _jsRuntime
 @using BlazorEcommerce_Common;
+@attribute [Authorize]
 @if (IsLoading)
 {
     <div class="text-center">
@@ -178,7 +179,7 @@ else
                             }
                             @if (OrderDTO.OrderHeader.Status == StaticDetails.Status_Confirmed || OrderDTO.OrderHeader.Status == StaticDetails.Status_Pending)
                             {
-                                <button class="btn btn-danger form-control my-1">Cancel Order</button>
+                                <button @onclick="CancelOrder" class="btn btn-danger form-control my-1">Cancel Order</button>
                             }
                         </div>
                     </div>
@@ -221,11 +222,30 @@ else
         if (string.IsNullOrEmpty(OrderDTO.OrderHeader.Carrier) || string.IsNullOrEmpty(OrderDTO.OrderHeader.Tracking))
         {
             await _jsRuntime.ToastrError("Please enter Tracking and Carrier Information.");
+            return;
         }
 
         OrderDTO.OrderHeader.Status = StaticDetails.Status_Shipped;
+      //  OrderDTO.OrderHeader.ShippingDate = DateTime.Now;
         var OrderHeaderDTO = await _orderRepository.UpdateHeader(OrderDTO.OrderHeader);
         OrderDTO.OrderHeader = OrderHeaderDTO;
         await _jsRuntime.ToastrSuccess("Order has been shipped.");
     }
+
+    private async Task CancelOrder()
+    {
+       OrderDTO.OrderHeader = await _orderRepository.CancelOrder(OrderDTO.OrderHeader.Id);
+        if (OrderDTO.OrderHeader.Status == StaticDetails.Status_Cancelled)
+        {
+            await _jsRuntime.ToastrSuccess("Order has been cancelled successfully");
+
+        }
+        if (OrderDTO.OrderHeader.Status == StaticDetails.Status_Refunded)
+        {
+            await _jsRuntime.ToastrSuccess("Order has been cancelled & refunded successfully");
+
+        }
+
+    }
 }
+

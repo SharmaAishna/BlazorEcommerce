@@ -1,5 +1,4 @@
-﻿<h3>OrderConfirmation</h3>
-@page "/OrderConfirmation"
+﻿@page "/OrderConfirmation"
 @inject IJSRuntime _jsRuntime
 @inject ILocalStorageService _localStorage
 @inject IOrderService _orderService
@@ -52,6 +51,7 @@
         var updateOrder = await _orderService.MarkPaymentSuccessful(Order.OrderHeader);
         if (updateOrder.Status == StaticDetails.Status_Confirmed)
         {
+            Order.OrderHeader.Status = updateOrder.Status;
             await _localStorage.RemoveItemAsync(StaticDetails.Local_OrderDetails);
             await _localStorage.RemoveItemAsync(StaticDetails.ShoppingCart);
         }

@@ -6,6 +6,7 @@ using BlazorEcommerce_DataAccessLayer.Data;
 using BlazorEcommerce_DataAccessLayer.ViewModel;
 using EcommerceModel;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 
 namespace BlazorEcommerce_Business.Repository
@@ -20,6 +21,37 @@ namespace BlazorEcommerce_Business.Repository
             _db = db;
             _mapper = mapper;
         }
+
+        public async Task<OrderHeaderDTO> CancelOrder(int Id)
+        {
+           var OrderHeader=await _db.OrderHeaders.FindAsync(Id);
+            if(OrderHeader == null)
+            {
+                return new OrderHeaderDTO();
+            }
+            if (OrderHeader.Status == StaticDetails.Status_Pending)
+            {
+                OrderHeader.Status= StaticDetails.Status_Cancelled;
+                await _db.SaveChangesAsync();
+            }
+            if(OrderHeader.Status == StaticDetails.Status_Confirmed)
+            {
+                //refund
+                var options = new RefundCreateOptions
+                { 
+                   Reason=RefundReasons.RequestedByCustomer,
+                   //not providing amount as it will return complete payment based on paymentIntentID
+                   PaymentIntent=OrderHeader.PaymentInternId
+                };
+                var service = new RefundService();
+                Refund refund=service.Create(options);
+                OrderHeader.Status = StaticDetails.Status_Refunded;
+                await _db.SaveChangesAsync();
+
+            }
+            return _mapper.Map<OrderHeader,OrderHeaderDTO>(OrderHeader);
+        }
+
         public async Task<OrderDTO> Create(OrderDTO orderDTO)
         {
             try
@@ -163,5 +195,6 @@ namespace BlazorEcommerce_Business.Repository
             return true;
 
         }
+
     }
 }

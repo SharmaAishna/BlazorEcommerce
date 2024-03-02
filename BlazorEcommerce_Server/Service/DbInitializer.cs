@@ -11,7 +11,9 @@ namespace BlazorEcommerce_Server.Service
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _db;
-        public DbInitializer(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext db)
+        public DbInitializer(UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext db)
         {
             _db = db;
             _roleManager = roleManager;
@@ -33,20 +35,22 @@ namespace BlazorEcommerce_Server.Service
                 }
                 else
                 {
+                   
                     return;
                 }
                 IdentityUser user = new()
                 {
-                    UserName = "ecommerce@aishna.com ",
-                    Email = "ecommerce@aishna.com ",
+                    UserName = "aishna_sharma@live.com ",
+                    Email = "aishna_sharma@live.com ",
                     EmailConfirmed = true
                 };
-                _userManager.CreateAsync(user, "Admin123").GetAwaiter().GetResult();
+                _userManager.CreateAsync(user, "Test@123").GetAwaiter().GetResult();
                 _userManager.AddToRoleAsync(user, StaticDetails.Role_Admin).GetAwaiter().GetResult();
+
             }
             catch (Exception ex)
             {
-
+                
             }
 
         }

@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>ace78e26-44eb-45af-84f6-3d235353a865</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,10 +22,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
-    <PackageReference Include="Radzen.Blazor" Version="4.25.7" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="23.2.6" />
-    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="23.2.6" />
-    <PackageReference Include="Syncfusion.Blazor.Themes" Version="23.2.6" />
+    <PackageReference Include="Radzen.Blazor" Version="4.25.10" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="24.2.8" />
+    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="24.2.8" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="24.2.8" />
   </ItemGroup>
 
   <ItemGroup>

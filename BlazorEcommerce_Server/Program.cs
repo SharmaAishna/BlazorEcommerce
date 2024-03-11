@@ -11,6 +11,7 @@ using Syncfusion.Blazor;
 using Microsoft.AspNetCore.Identity;
 using Stripe;
 
+
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NAaF1cXmhNYVFpR2Nbe051flZBalhSVBYiSV9jS3pTdUVnWX1cc3dQRWNcWA==");
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,8 +1,7 @@
 ﻿@page "/"
 @inject IProductService _productService
 
-<AuthorizeView>
-    <Authorized>
+
         @if (IsProcessing)
         {
             <div style="position:fixed;top:50%;left:50%;margin-top:-50px;margin-left:-100px;">
@@ -48,12 +47,7 @@
                 </div>
             </div>
         }
-    </Authorized>
-    <NotAuthorized>
-        <p>Not Signed in!</p>
-    </NotAuthorized>
 
-</AuthorizeView>
 
 
 

@@ -82,10 +82,11 @@ namespace Blazor_Ecommerce_WebAPI.Controllers
             var sessionDetails = service.Get(orderHeaderDTO.SessionId);
             if (sessionDetails.PaymentStatus == "paid")
             {
-                var result = await _orderRepository.MarkPaymentSuccessful(orderHeaderDTO.Id, sessionDetails.PaymentIntentId);
-                await _emailSender.SendEmailAsync(orderHeaderDTO.Email,
-                    "Order Confirmation",
-                    "New Order has been created:" + orderHeaderDTO.Id);
+                var result = await _orderRepository.MarkPaymentSuccessful(orderHeaderDTO.Id,
+                    sessionDetails.PaymentIntentId);
+                //await _emailSender.SendEmailAsync(orderHeaderDTO.Email,
+                //    "Order Confirmation",
+                //    "New Order has been created:" + orderHeaderDTO.Id);
                 if (result == null)
                 {
                     return BadRequest(new ErrorModelDTO()

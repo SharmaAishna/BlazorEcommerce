@@ -40,11 +40,11 @@ namespace BlazorEcommerce_Server.Service
                 }
                 IdentityUser user = new()
                 {
-                    UserName = "aishna_sharma@live.com ",
-                    Email = "aishna_sharma@live.com ",
+                    UserName = "admin@live.com ",
+                    Email = "admin@live.com ",
                     EmailConfirmed = true
                 };
-                _userManager.CreateAsync(user, "Test@123").GetAwaiter().GetResult();
+                _userManager.CreateAsync(user, "Admin@123").GetAwaiter().GetResult();
                 _userManager.AddToRoleAsync(user, StaticDetails.Role_Admin).GetAwaiter().GetResult();
 
             }

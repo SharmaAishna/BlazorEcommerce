@@ -1,7 +1,9 @@
 ﻿@page "/OrderConfirmation"
+
 @inject IJSRuntime _jsRuntime
 @inject ILocalStorageService _localStorage
 @inject IOrderService _orderService
+
 
 <div class="container">
     @if (IsProcessing)

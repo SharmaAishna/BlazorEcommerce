@@ -1,8 +1,9 @@
 ﻿@page "/cart"
+@using Microsoft.AspNetCore.Authorization
 @inject ILocalStorageService _LocalStorage
 @inject IProductService _productService
 @inject ICartService _cartService
-
+@attribute [Authorize]
 @if (IsProcessing)
 {
     <div style="position:fixed;top:50%;left:50%;margin-top:-50px;margin-left:-100px;">

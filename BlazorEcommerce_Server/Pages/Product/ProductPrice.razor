@@ -20,7 +20,9 @@ else
             Description:<span>@((MarkupString)Product.Description)</span>
         </div>
         <div class="col-1">
-            <img src="@Product.ImageUrl" class="w-100">
+            <div>
+                <img src="@Product.ImageUrl" class="w-100">
+            </div>
         </div>
     </div>
     <SfGrid @ref="productPriceGrid" DataSource="@productPrices" AllowPaging="true" AllowFiltering="true" AllowSorting="true"
@@ -42,7 +44,7 @@ else
             <GridColumn Field=@nameof(ProductPriceDTO.Size) HeaderText="Size" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
                 <EditTemplate>
                     <Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="SizeList" TItem="string" TValue="string"
-                    @bind-Value="((context as ProductPriceDTO).Size)">
+                                                                @bind-Value="((context as ProductPriceDTO).Size)">
 
                     </Syncfusion.Blazor.DropDowns.SfDropDownList>
                 </EditTemplate>

@@ -15,11 +15,11 @@ namespace Blazor_Ecommerce_WebAPI.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IEmailSender _emailSender;
-        public OrderController(IOrderRepository orderRepository, IEmailSender emailSender)
+        //private readonly IEmailSender _emailSender;
+        public OrderController(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
-            _emailSender = emailSender;
+      //      _emailSender = emailSender;
 
         }
 

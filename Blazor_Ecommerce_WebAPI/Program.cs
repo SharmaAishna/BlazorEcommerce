@@ -88,18 +88,18 @@ builder.Services.AddCors(o => o.AddPolicy("Ecommerce", builder =>
 var app = builder.Build();
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe")["ApiKey"];
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Blazor ECommerce API v1");
-  c.RoutePrefix = string.Empty;
+    c.RoutePrefix = string.Empty;
 });
 app.UseHttpsRedirection();
 app.UseCors("Ecommerce");

@@ -48,16 +48,17 @@
     protected override async Task OnInitializedAsync()
     {
         IsProcessing = true;
-        Order=await _localStorage.GetItemAsync<OrderDTO>(StaticDetails.Local_OrderDetails);
+        Order = await _localStorage.GetItemAsync<OrderDTO>(StaticDetails.Local_OrderDetails);
         //logic to check payment and update status
-        var updateOrder = await _orderService.MarkPaymentSuccessful(Order.OrderHeader);
-        if (updateOrder.Status == StaticDetails.Status_Confirmed)
+        var updatedOrder = await _orderService.MarkPaymentSuccessful(Order.OrderHeader);
+        if (updatedOrder.Status == StaticDetails.Status_Confirmed)
         {
-            Order.OrderHeader.Status = updateOrder.Status;
-            await _localStorage.RemoveItemAsync(StaticDetails.Local_OrderDetails);
+            Order.OrderHeader.Status = updatedOrder.Status;
             await _localStorage.RemoveItemAsync(StaticDetails.ShoppingCart);
+            await _localStorage.RemoveItemAsync(StaticDetails.Local_OrderDetails);
+           
         }
-      
+
         IsProcessing = false;
     }
 }

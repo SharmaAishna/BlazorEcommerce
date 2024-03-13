@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace EcommerceModel
 {
-    public class CategoryDTO : BaseEntityDTO
+    public class CategoryDTO
     {
-
+        public int Id { get; set; }
         [Required(ErrorMessage = "Please Enter name..")]
         public string Name { get; set; }
     }
-
-
 }

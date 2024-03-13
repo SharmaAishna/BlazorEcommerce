@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace EcommerceModel
 {
-    public class ProductPriceDTO: BaseEntityDTO
+    public class ProductPriceDTO
     {
+        public int Id { get; set; }
         [Required]
         public int ProductId { get; set; }
         [Required]

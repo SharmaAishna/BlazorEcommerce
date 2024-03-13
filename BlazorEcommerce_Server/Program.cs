@@ -33,6 +33,14 @@ builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IFileUpload, FileUpload>();
 builder.Services.AddScoped<IProductPriceRepository, ProductPriceRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", build => build.AllowAnyMethod()
+    .AllowAnyMethod()
+    .AllowAnyOrigin());
+});
+
 var app = builder.Build();
 
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe")["ApiKey"];
@@ -50,7 +58,7 @@ else
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAll");
 app.UseStaticFiles();
 
 app.UseRouting();

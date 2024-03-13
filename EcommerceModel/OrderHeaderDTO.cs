@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace EcommerceModel
 {
-    public class OrderHeaderDTO
+    public class OrderHeaderDTO: BaseEntityDTO
     {
       
-        public int Id { get; set; }
         [Required]
         public string? UserId { get; set; }
      

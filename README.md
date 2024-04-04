@@ -10,13 +10,13 @@ Username admin@live.com
 Password Test@123
 
 # What do you get?
-## Web App using ASP.NET, C#.NET, Blazor , Azure SQL Server, APIs
-## Stripe Integration 
-## CRUD operations on the products, and categories, and set the price according to the size of the clothes 
-## Manage Orders. 
-## Features Order Cancellation, Refund, and Shipping. 
-## Consuming data using API's.
-## Microsoft Identity for Authorization and Authentication.
+- Unordered sub-list. Web App using ASP.NET, C#.NET, Blazor, Azure SQL Server, APIs
+- Stripe Integration 
+- CRUD operations on the products, and categories, and set the price according to the size of the clothes 
+-  Manage Orders. 
+-  Features Order Cancellation, Refund, and Shipping. 
+-  Consuming data using API's.
+- Microsoft Identity for Authorization and Authentication.
 
 
 
